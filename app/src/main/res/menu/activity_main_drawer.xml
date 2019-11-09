@@ -10,6 +10,7 @@
             android:icon="@drawable/ic_university"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_upload"
             android:icon="@drawable/ic_upload"
             android:title="@string/menu_upload" />
         <item
@@ -25,6 +26,9 @@
         <item
             android:icon="@drawable/ic_lost_items"
             android:title="@string/menu_lost_found" />
+        <item android:id="@+id/nav_brainer"
+            android:title="@string/brain_teaser"
+            android:icon="@drawable/ic_brain_black_24dp"/>
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

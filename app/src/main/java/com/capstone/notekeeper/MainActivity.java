@@ -8,11 +8,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.capstone.notekeeper.Fragments.HomeFragment;
+import com.capstone.notekeeper.Fragments.UploadNotesFragment;
 import com.capstone.notekeeper.authentication.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,13 +26,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private TextView userEmail;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,29 +57,48 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            Toast.makeText(this, "hellp", Toast.LENGTH_SHORT).show();
-            item.setChecked(true);
-            switch(id)
-            {
-                case R.id.nav_logout:
-                      signout();
-                case R.id.nav_home:
-                    Toast.makeText(MainActivity.this, "Home",Toast.LENGTH_SHORT).show();break;
-                case R.id.nav_ask_quora:
-                    Toast.makeText(MainActivity.this, "Questions",Toast.LENGTH_SHORT).show();break;
-                default:
-                    Toast.makeText(this, "dee", Toast.LENGTH_SHORT).show();;
-            }
-            return false;
-        });
+        fragmentManager = getSupportFragmentManager();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+        displaySelectedScreen(R.id.nav_home);
         if(currentFirebaseUser!=null)
         {
             View headerView = navigationView.getHeaderView(0);
             userEmail = headerView.findViewById(R.id.user_email_id);
             userEmail.setText(currentFirebaseUser.getEmail());
         }
+    }
+
+    private boolean displaySelectedScreen( int id) {
+        Fragment fragment = null;
+        switch(id)
+        {
+            case R.id.nav_logout:
+                  signout();
+                  break;
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+//                    Toast.makeText(MainActivity.this, "Home",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_brainer:
+                 startActivity(new Intent(this,BrainTeaserActivity.class));
+                 break;
+            case R.id.nav_upload:
+                 fragment = new UploadNotesFragment();
+                 break;
+            case R.id.nav_ask_quora:
+//                    Toast.makeText(MainActivity.this, "Questions",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+//                    Toast.makeText(this, "dee", Toast.LENGTH_SHORT).show();
+        }
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
+        drawerLayout.closeDrawers();
+        return false;
     }
 
     private void signout() {
@@ -100,5 +127,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        menuItem.setChecked(true);
+        return  displaySelectedScreen(menuItem.getItemId());
     }
 }

@@ -44,4 +44,5 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
+    <string name="brain_teaser">Brain Teaser</string>
 </resources>
