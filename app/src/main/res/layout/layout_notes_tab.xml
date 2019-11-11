@@ -1,118 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
     app:cardElevation="4dp"
     android:layout_margin="10dp"
+    android:id="@+id/notesMainCard"
     app:cardBackgroundColor="@color/white_1000"
     android:orientation="vertical">
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <TextView
-           android:id="@+id/notes_icon_text"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:padding="20dp"
-           android:text="os"
-           android:textAllCaps="true"
-           android:textSize="20sp"
-           android:textColor="@color/black"
-           android:layout_margin="10dp"
-           android:background="@drawable/circle"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintBottom_toBottomOf="parent" />
-       <LinearLayout
-           android:layout_width="0dp"
-           android:orientation="vertical"
-           app:layout_constraintStart_toEndOf="@id/notes_icon_text"
-           android:layout_marginStart="10dp"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           android:padding="5dp"
-           app:layout_constraintBottom_toBottomOf="parent"
-           android:layout_height="wrap_content">
-           <TextView
-               android:id="@+id/NotesName"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:textSize="16sp"
-               android:maxLines="2"
-               android:textColor="@color/black"
-               android:layout_marginTop="5dp"
-               android:text="Operating systems notes"/>
-           <TextView
-               android:id="@+id/NotesAuthor"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="14sp"
-               android:maxLines="2"
-               android:textColor="@color/grey_800"
-               android:layout_marginTop="5dp"
-               android:text="By: Sunil Kumar"/>
-           <TextView
-               android:id="@+id/NotesType"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textSize="14sp"
-               android:maxLines="2"
-               android:textColor="@color/grey_800"
-               android:layout_marginTop="5dp"
-               android:text="Type: Handwritten"/>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="50dp"
-               android:layout_gravity="bottom"
-               android:padding="5dp"
-               android:orientation="horizontal">
-               <ImageView
-                   android:layout_width="50dp"
-                   android:layout_height="match_parent"
-                   android:src="@drawable/ic_download" />
-               <RatingBar
-                   android:id="@+id/ratingBar"
-                   android:layout_width="match_parent"
-                   style="?android:attr/ratingBarStyle"
-                   android:numStars="6"
-                   android:max="5"
-                   android:theme="@style/RatingBar"
-                   android:stepSize=".5"
-                   android:layout_marginStart="10dp"
-                   android:scaleX=".9"
-                   android:scaleY=".9"
-                   android:transformPivotX="0dp"
-                   android:transformPivotY="0dp"
-                   android:layout_height="match_parent" />
-           </LinearLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="50dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+<!--        <TextView-->
+<!--            android:id="@+id/notes_icon_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:background="@drawable/circle"-->
+<!--            android:padding="20dp"-->
+<!--            android:text="os"-->
+<!--            android:textAllCaps="true"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/guideline"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/blue_500"
+            android:layout_marginEnd="10dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="5dp"
-            android:layout_height="30dp">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_star_black_24dp"
-                android:layout_height="match_parent"
-                />
-            <TextView
-                android:id="@+id/NotesRating"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:text="3.9"/>
-        </LinearLayout>
-   </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/NotesName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:maxLines="2"
+            android:text="Operating systems notes"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NotesAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="2"
+            android:text="By: Sunil Kumar"
+            android:textColor="@color/grey_800"
+            app:layout_constraintTop_toBottomOf="@id/NotesName"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/NotesType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Type: Handwritten"
+            android:textColor="@color/grey_800"
+            app:layout_constraintTop_toBottomOf="@id/NotesAuthor"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/NotesDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:maxLines="3"
+            android:ellipsize="marquee"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:text="This is notes description please download our awesome notes"
+            android:textColor="@color/grey_800"
+            app:layout_constraintTop_toBottomOf="@id/NotesType"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <!--           <LinearLayout-->
+        <!--               android:layout_width="match_parent"-->
+        <!--               android:layout_height="50dp"-->
+        <!--               android:layout_gravity="bottom"-->
+        <!--               android:padding="5dp"-->
+        <!--               android:orientation="horizontal">-->
+        <!--               <ImageView-->
+        <!--                   android:layout_width="50dp"-->
+        <!--                   android:layout_height="match_parent"-->
+        <!--                   android:src="@drawable/ic_download" />-->
+        <!--&lt;!&ndash;               <RatingBar&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:id="@+id/ratingBar"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   style="?android:attr/ratingBarStyle"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:numStars="6"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:max="5"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:theme="@style/RatingBar"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:stepSize=".5"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:layout_marginStart="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:scaleX=".9"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:scaleY=".9"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:transformPivotX="0dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:transformPivotY="0dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                   android:layout_height="match_parent" />&ndash;&gt;-->
+        <!--           </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="50dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:layout_height="30dp">-->
+<!--            <ImageView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:src="@drawable/ic_star_black_24dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/NotesRating"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15sp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="3.9"/>-->
+<!--        </LinearLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

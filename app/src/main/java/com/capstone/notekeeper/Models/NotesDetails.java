@@ -1,34 +1,44 @@
 package com.capstone.notekeeper.Models;
 
 public class NotesDetails {
-    private String materialName,author,materialType,courseIcon;
-    private Integer rating;
+    private String author,type,description,title;
 
-    public NotesDetails(String materialName, String author, String materialType, String courseIcon, Integer rating) {
-        this.materialName = materialName;
+    public NotesDetails(String author, String type, String description, String title) {
         this.author = author;
-        this.materialType = materialType;
-        this.courseIcon = courseIcon;
-        this.rating = rating;
-    }
-
-    public String getMaterialName() {
-        return materialName;
+        this.type = type;
+        this.description = description;
+        this.title = title;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public String getMaterialType() {
-        return materialType;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public String getCourseIcon() {
-        return courseIcon;
+    public String getType() {
+        return type;
     }
 
-    public Integer getRating() {
-        return rating;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

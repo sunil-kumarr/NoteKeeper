@@ -49,12 +49,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         RatingBar ratingBar;
         NotesHolder(@NonNull View itemView) {
             super(itemView);
-            NotesIcon = itemView.findViewById(R.id.notes_icon_text);
             NotesNAme = itemView.findViewById(R.id.NotesName);
             NotesAuthor = itemView.findViewById(R.id.NotesAuthor);
             NotesType = itemView.findViewById(R.id.NotesType);
-            NotesRating = itemView.findViewById(R.id.NotesRating);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }
 }
