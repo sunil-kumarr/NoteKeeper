@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView userEmail;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         navigationView = findViewById(R.id.nav_view);
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
         displaySelectedScreen(R.id.nav_home);
@@ -81,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                    Toast.makeText(MainActivity.this, "Home",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_brainer:
-                 startActivity(new Intent(this,BrainTeaserActivity.class));
                  break;
             case R.id.nav_upload:
                  fragment = new UploadNotesFragment();

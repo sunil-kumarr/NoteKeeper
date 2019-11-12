@@ -4,15 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capstone.notekeeper.Models.CourseType;
 import com.capstone.notekeeper.Models.NotesDetails;
 import com.capstone.notekeeper.R;
 
@@ -45,8 +41,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
     }
 
     class NotesHolder extends RecyclerView.ViewHolder{
-        TextView NotesIcon,NotesNAme,NotesAuthor,NotesType,NotesRating;
-        RatingBar ratingBar;
+        TextView NotesNAme,NotesAuthor,NotesType;
         NotesHolder(@NonNull View itemView) {
             super(itemView);
             NotesNAme = itemView.findViewById(R.id.NotesName);

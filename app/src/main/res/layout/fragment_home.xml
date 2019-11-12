@@ -6,22 +6,21 @@
     android:background="@color/grey_200"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/grey_200"
         android:background="@color/grey_200"
         android:fitsSystemWindows="true"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notes_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:visibility="visible" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/courseRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

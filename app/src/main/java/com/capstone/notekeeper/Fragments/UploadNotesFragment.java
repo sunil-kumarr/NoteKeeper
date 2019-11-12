@@ -4,11 +4,13 @@ package com.capstone.notekeeper.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,11 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 
+import com.capstone.notekeeper.Models.NotesDetails;
 import com.capstone.notekeeper.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,7 +49,12 @@ public class UploadNotesFragment extends Fragment  {
     private EditText mFileTitle,mFileAuthor,mFileDescription;
     private AppCompatSpinner branchList,notesType;
     private FirebaseStorage firebaseStorage;
+    private FirebaseFirestore firebaseFirestore;
     private ProgressBar mProgressBar;
+    private NotesDetails mNoteBook;
+    private Uri fileUri;
+    private String filelink;
+    ArrayList<String> types;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -61,6 +72,7 @@ public class UploadNotesFragment extends Fragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         firebaseStorage = FirebaseStorage.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         Objects.requireNonNull(getActivity()).setTitle("Upload study material");
         mFileChoose = view.findViewById(R.id.choose_file_btn);
         mUploadFile = view.findViewById(R.id.upload_file_btn);
@@ -72,20 +84,7 @@ public class UploadNotesFragment extends Fragment  {
         mFileTitle = view.findViewById(R.id.edt_course_name);
         mFileAuthor = view.findViewById(R.id.edt_author_name);
         mFileDescription = view.findViewById(R.id.edt_course_description);
-        ArrayList<String> branchname = new ArrayList<>();
-        branchname.add("Computer Science Engineering");
-        branchname.add("Information Technology Engineering");
-        branchname.add("Civil Engineering");
-        branchname.add("Mechanical Engineering");
-        branchname.add("Electrical Engineering");
-        branchname.add("Chemical Engineering");
-        branchname.add("Quantitative Aptitude");
-        branchname.add("Verbal Ability");
-        branchname.add("Logical Reasoning");
-        branchname.add("Verbal Reasoning");
-        ArrayAdapter<String> spinnerArrayAdapter =
-                new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, branchname);
-        ArrayList<String> types = new ArrayList<>();
+        types = new ArrayList<>();
         types.add("Handwritten");
         types.add("EBook");
         types.add("Computerized");
@@ -93,7 +92,7 @@ public class UploadNotesFragment extends Fragment  {
         ArrayAdapter<String> noteTypeAdapter =
                 new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_dropdown_item,types);
         notesType.setAdapter(noteTypeAdapter);
-        branchList.setAdapter(spinnerArrayAdapter);
+
         firebaseStorage = FirebaseStorage.getInstance();
         mFileChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +113,15 @@ public class UploadNotesFragment extends Fragment  {
         String author = String.valueOf(mFileAuthor.getText());
         String description = String.valueOf(mFileDescription.getText());
         if(title!=null && author!=null && description!=null){
-
+            if(fileUri!=null) {
+                UploadFiles(fileUri);
+                String s = types.get(notesType.getSelectedItemPosition());
+                mNoteBook = new NotesDetails(author,s,description,title,filelink);
+                firebaseFirestore.collection("Notes").document().set(mNoteBook)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                        });
+            }
         }else{
             Toast.makeText(mContext, "Invalid Input", Toast.LENGTH_SHORT).show();
         }
@@ -147,17 +154,43 @@ public class UploadNotesFragment extends Fragment  {
                 Intent.createChooser(intent, "Select a File to Upload"),
                 FILE_SELECT_CODE);
     }
+    private String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = 0;
+            if (result != null) {
+                cut = result.lastIndexOf('/');
+            }
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == FILE_SELECT_CODE) {
             if (resultCode == RESULT_OK) {
                 // Get the Uri of the selected file
-                Uri uri = data.getData();
-                Log.d(TAG, "File Uri: " + uri.toString());
-                try {UploadFiles(uri);
-                    String fileName = uri.getPath();
-                    mFileNameShow.setText(fileName);
+                fileUri = data.getData();
+                Log.d(TAG, "File Uri: " + fileUri.toString());
+                try {
+                    String name = getFileName(fileUri);
+                    mFileNameShow.setText(name);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -177,7 +210,8 @@ public class UploadNotesFragment extends Fragment  {
                     .addOnSuccessListener(downloadUri -> {
                          mProgressBar.setVisibility(View.GONE);
                          uploadPer.setText("Uploaded Successfully.");
-                          Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
+                          //Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
+                          filelink = downloadUri.toString();
                           Log.d("Firebase url", "" + downloadUri.toString());
                        })
                     .addOnProgressListener(pTaskSnapshot -> {

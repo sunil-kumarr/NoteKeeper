@@ -18,7 +18,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="nav_header_title">Guest User</string>
     <string name="action_search">Search</string>
-
+    <string name="facebook_application_id" translatable="false">2448040282118815</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb2448040282118815</string>
     <string name="menu_home">Home</string>
     <string name="menu_upload">Upload</string>
     <string name="menu_sell_buy">Buy and Sell</string>

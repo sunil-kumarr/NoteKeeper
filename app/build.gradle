@@ -10,11 +10,13 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -46,6 +49,11 @@ dependencies {
     //firebase dep
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.facebook.android:facebook-android-sdk:4.17.0'
     //external lib
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
