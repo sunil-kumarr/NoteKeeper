@@ -46,4 +46,7 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
     <string name="brain_teaser">Brain Teaser</string>
+    <string name="buy_products">Buy Products</string>
+    <string name="sell_products">Sell Products</string>
+    <string name="profile">Profile</string>
 </resources>

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,7 @@ public class UploadNotesFragment extends Fragment  {
     private ProgressBar mProgressBar;
     private NotesDetails mNoteBook;
     private Uri fileUri;
-    private String filelink;
+    private String filelink,fileName,author,title,description,typ;
     ArrayList<String> types;
 
     @Override
@@ -78,7 +79,6 @@ public class UploadNotesFragment extends Fragment  {
         mUploadFile = view.findViewById(R.id.upload_file_btn);
         mFileNameShow = view.findViewById(R.id.file_name);
         uploadPer = view.findViewById(R.id.upload_percentage);
-        branchList = view.findViewById(R.id.branchNameSpinner);
         notesType = view.findViewById(R.id.NotesTypeSpinner);
         mProgressBar = view.findViewById(R.id.file_upload_bar);
         mFileTitle = view.findViewById(R.id.edt_course_name);
@@ -109,22 +109,32 @@ public class UploadNotesFragment extends Fragment  {
     }
 
     private void uploadDataToFirebase() {
-        String title = String.valueOf(mFileTitle.getText());
-        String author = String.valueOf(mFileAuthor.getText());
-        String description = String.valueOf(mFileDescription.getText());
-        if(title!=null && author!=null && description!=null){
+        title = mFileTitle.getText().toString();
+        author = mFileAuthor.getText().toString();
+        description = mFileDescription.getText().toString();
+        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(author)||TextUtils.isEmpty(description)){
+            Toast.makeText(mContext, "Invalid /Incomplete input", Toast.LENGTH_SHORT).show();
+            return;
+        }
             if(fileUri!=null) {
                 UploadFiles(fileUri);
-                String s = types.get(notesType.getSelectedItemPosition());
-                mNoteBook = new NotesDetails(author,s,description,title,filelink);
-                firebaseFirestore.collection("Notes").document().set(mNoteBook)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
-                        });
+                 typ = types.get(notesType.getSelectedItemPosition());
+
             }
-        }else{
-            Toast.makeText(mContext, "Invalid Input", Toast.LENGTH_SHORT).show();
-        }
+
+    }
+    private void addDataToFirestore(String fileUrl){
+        mNoteBook = new NotesDetails(author,typ,description,title,fileUrl);
+        Toast.makeText(mContext, "Upload before : "+fileUrl, Toast.LENGTH_SHORT).show();
+        firebaseFirestore.collection("notes").document("help").set(mNoteBook)
+                .addOnCompleteListener(aVoid->{
+                    Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                    mFileTitle.setText("");
+                    mFileDescription.setText("");
+                    mFileAuthor.setText("");
+                    notesType.setSelection(0);
+                    mFileNameShow.setText("");
+                });
     }
     private static final int FILE_SELECT_CODE = 0;
     private void browseDocuments(){
@@ -189,8 +199,8 @@ public class UploadNotesFragment extends Fragment  {
                 fileUri = data.getData();
                 Log.d(TAG, "File Uri: " + fileUri.toString());
                 try {
-                    String name = getFileName(fileUri);
-                    mFileNameShow.setText(name);
+                    fileName = getFileName(fileUri);
+                    mFileNameShow.setText(fileName);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -204,7 +214,7 @@ public class UploadNotesFragment extends Fragment  {
             mProgressBar.setVisibility(View.VISIBLE);
             uploadPer.setVisibility(View.VISIBLE);
             StorageReference storageReference = firebaseStorage.getReference();
-            StorageReference ref = storageReference.child("files/"+pFileUri.getLastPathSegment());
+            StorageReference ref = storageReference.child("files/"+fileName);
             Toast.makeText(mContext, "Uploading files", Toast.LENGTH_SHORT).show();
             ref.putFile(pFileUri)
                     .addOnSuccessListener(downloadUri -> {
@@ -212,6 +222,7 @@ public class UploadNotesFragment extends Fragment  {
                          uploadPer.setText("Uploaded Successfully.");
                           //Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
                           filelink = downloadUri.toString();
+                          addDataToFirestore(filelink);
                           Log.d("Firebase url", "" + downloadUri.toString());
                        })
                     .addOnProgressListener(pTaskSnapshot -> {

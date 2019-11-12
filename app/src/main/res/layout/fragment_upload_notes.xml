@@ -106,22 +106,15 @@
             android:textColor="#000000"
             android:textColorHint="@android:color/white" />
     </com.google.android.material.textfield.TextInputLayout>
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:layout_width="match_parent"
-        android:id="@+id/branchNameSpinner"
-        android:layout_height="50dp"
-        android:background="@drawable/file_choos_box"
-        android:spinnerMode="dropdown"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintTop_toBottomOf="@id/edt_container_2" />
+
     <androidx.appcompat.widget.AppCompatSpinner
         android:layout_width="match_parent"
         android:id="@+id/NotesTypeSpinner"
         android:layout_height="50dp"
         android:background="@drawable/file_choos_box"
         android:spinnerMode="dropdown"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/branchNameSpinner" />
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/edt_container_2" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

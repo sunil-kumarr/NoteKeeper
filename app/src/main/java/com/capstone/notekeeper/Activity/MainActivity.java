@@ -1,4 +1,4 @@
-package com.capstone.notekeeper;
+package com.capstone.notekeeper.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,8 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.capstone.notekeeper.Fragments.BuyProductFragment;
 import com.capstone.notekeeper.Fragments.HomeFragment;
+import com.capstone.notekeeper.Fragments.ProfileFragment;
+import com.capstone.notekeeper.Fragments.SellFragment;
 import com.capstone.notekeeper.Fragments.UploadNotesFragment;
+import com.capstone.notekeeper.R;
 import com.capstone.notekeeper.authentication.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,9 +79,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                   break;
             case R.id.nav_home:
                 fragment = new HomeFragment();
-//                    Toast.makeText(MainActivity.this, "Home",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_buy:
+                fragment = new BuyProductFragment();
+                break;
+            case R.id.nav_profile:
+                fragment = new ProfileFragment();
+                break;
+            case R.id.nav_sell:
+                fragment = new SellFragment();
                 break;
             case R.id.nav_brainer:
+                startActivity(new Intent(MainActivity.this, BrainPrepActivity.class));
                  break;
             case R.id.nav_upload:
                  fragment = new UploadNotesFragment();

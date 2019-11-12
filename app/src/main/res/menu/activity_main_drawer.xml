@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_university"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/profile" />
+        <item
             android:id="@+id/nav_upload"
             android:icon="@drawable/ic_upload"
             android:title="@string/menu_upload" />
@@ -18,8 +22,14 @@
             android:icon="@drawable/ic_blackboard_1"
             android:title="@string/menu_ask_questions" />
         <item
+            android:id="@+id/nav_sell"
             android:icon="@drawable/ic_buy_sell"
-            android:title="@string/menu_sell_buy" />
+            android:title="@string/sell_products" />
+        <item
+            android:id="@+id/nav_buy"
+            android:icon="@drawable/ic_buy_sell"
+            android:title="@string/buy_products" />
+
         <item
             android:icon="@drawable/ic_books_1"
             android:title="@string/menu_study_material" />
