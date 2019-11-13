@@ -21,14 +21,17 @@
     <string name="facebook_application_id" translatable="false">2448040282118815</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb2448040282118815</string>
     <string name="menu_home">Home</string>
-    <string name="menu_upload">Upload</string>
+    <string name="menu_upload">Upload Study Material</string>
     <string name="menu_sell_buy">Buy and Sell</string>
     <string name="menu_lost_found">Lost and Found</string>
     <string name="menu_study_material">Study material</string>
-    <string name="menu_ask_questions">Ask Doubts</string>
+    <string name="menu_ask_questions">Ask Questions</string>
     <string name="menu_logout">Logout</string>
     <string name="title_activity_settings">Settings</string>
-
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">60dp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

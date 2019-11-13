@@ -31,7 +31,10 @@ import androidx.fragment.app.Fragment;
 
 import com.capstone.notekeeper.Models.NotesDetails;
 import com.capstone.notekeeper.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -51,6 +54,7 @@ public class UploadNotesFragment extends Fragment  {
     private AppCompatSpinner branchList,notesType;
     private FirebaseStorage firebaseStorage;
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseDatabase firebaseDatabase;
     private ProgressBar mProgressBar;
     private NotesDetails mNoteBook;
     private Uri fileUri;
@@ -74,6 +78,7 @@ public class UploadNotesFragment extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         Objects.requireNonNull(getActivity()).setTitle("Upload study material");
         mFileChoose = view.findViewById(R.id.choose_file_btn);
         mUploadFile = view.findViewById(R.id.upload_file_btn);
@@ -125,16 +130,18 @@ public class UploadNotesFragment extends Fragment  {
     }
     private void addDataToFirestore(String fileUrl){
         mNoteBook = new NotesDetails(author,typ,description,title,fileUrl);
-        Toast.makeText(mContext, "Upload before : "+fileUrl, Toast.LENGTH_SHORT).show();
-        firebaseFirestore.collection("notes").document("help").set(mNoteBook)
-                .addOnCompleteListener(aVoid->{
-                    Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
-                    mFileTitle.setText("");
-                    mFileDescription.setText("");
-                    mFileAuthor.setText("");
-                    notesType.setSelection(0);
-                    mFileNameShow.setText("");
-                });
+       DatabaseReference databaseReference = firebaseDatabase.getReference("notes");
+       String keyId = databaseReference.push().getKey();
+       databaseReference.child(keyId).setValue(mNoteBook).addOnSuccessListener(aVoid -> {
+           Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
+           mFileTitle.setText("");
+           mFileDescription.setText("");
+           mFileAuthor.setText("");
+           notesType.setSelection(0);
+           mFileNameShow.setText("");
+           uploadPer.setText("");
+           mFileTitle.requestFocus();
+       });
     }
     private static final int FILE_SELECT_CODE = 0;
     private void browseDocuments(){
@@ -221,8 +228,11 @@ public class UploadNotesFragment extends Fragment  {
                          mProgressBar.setVisibility(View.GONE);
                          uploadPer.setText("Uploaded Successfully.");
                           //Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
-                          filelink = downloadUri.toString();
-                          addDataToFirestore(filelink);
+                          ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                             filelink = uri.toString();
+                              addDataToFirestore(filelink);
+                          });
+
                           Log.d("Firebase url", "" + downloadUri.toString());
                        })
                     .addOnProgressListener(pTaskSnapshot -> {

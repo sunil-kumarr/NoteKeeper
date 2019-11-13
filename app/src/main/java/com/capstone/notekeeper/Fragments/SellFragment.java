@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.capstone.notekeeper.R;
-import com.capstone.notekeeper.Upload;
+import com.capstone.notekeeper.Models.Upload;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +61,7 @@ public class SellFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sell, container, false);
-
+        getActivity().setTitle("Sell Products");
         mButtonChooseImage = v.findViewById(R.id.button_choose_image);
         mButtonUpload = v.findViewById(R.id.button_upload);
         mEditTextFileName = v.findViewById(R.id.edit_text_file_name);

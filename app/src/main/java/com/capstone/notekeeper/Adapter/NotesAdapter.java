@@ -11,15 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.notekeeper.Models.NotesDetails;
 import com.capstone.notekeeper.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder> {
     private ArrayList<NotesDetails> notesList;
+    private ArrayList<Integer> mColor;
+    private DownloadData DM;
     private Context mContext;
-    public NotesAdapter(ArrayList<NotesDetails> course, Context context){
+    public NotesAdapter(ArrayList<NotesDetails> course, Context context,ArrayList<Integer> colorlist){
         mContext = context;
         notesList = course;
+        mColor = colorlist;
+        DM = (DownloadData) context;
     }
     @NonNull
     @Override
@@ -31,7 +36,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
     @Override
     public void onBindViewHolder(@NonNull NotesHolder holder, int position) {
         NotesDetails current = notesList.get(position);
-
+        holder.NotesNAme.setText(current.getTitle());
+        holder.NotesAuthor.setText(String.format("By: %s", current.getAuthor()));
+        holder.NotesDescription.setText(current.getDescription());
+        holder.NotesType.setText(String.format("Type: %s", current.getType()));
+        holder.mNotesColor.setBackgroundResource(mColor.get(position%5));
+        holder.mDownloadFile.setOnClickListener(v->{
+            DM.DownloadNotes(current);
+        });
     }
 
     @Override
@@ -41,12 +53,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
     }
 
     class NotesHolder extends RecyclerView.ViewHolder{
-        TextView NotesNAme,NotesAuthor,NotesType;
+        TextView NotesNAme,NotesAuthor,NotesType,NotesDescription;
+        FloatingActionButton mDownloadFile;
+        View mNotesColor;
         NotesHolder(@NonNull View itemView) {
             super(itemView);
             NotesNAme = itemView.findViewById(R.id.NotesName);
             NotesAuthor = itemView.findViewById(R.id.NotesAuthor);
             NotesType = itemView.findViewById(R.id.NotesType);
+            NotesDescription = itemView.findViewById(R.id.NotesDescription);
+            mNotesColor = itemView.findViewById(R.id.NotesColor);
+            mDownloadFile = itemView.findViewById(R.id.NotesDownloadBtn);
         }
+    }
+    public interface DownloadData{
+         long DownloadNotes(NotesDetails notes);
     }
 }

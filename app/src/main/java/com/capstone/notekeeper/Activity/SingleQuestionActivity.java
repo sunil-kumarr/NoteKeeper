@@ -54,7 +54,7 @@ public class SingleQuestionActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_single_question);
         setSupportActionBar(toolbar);
 
-        // Get the intent data from BloqueryActivity
+        // Get the intent data from BlogQueryFragment
         String questionId = getIntent().getStringExtra("question_id_key");
 
         // Initialise Views

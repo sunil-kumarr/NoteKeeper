@@ -1,5 +1,6 @@
 package com.capstone.notekeeper.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.notekeeper.Adapter.ImageAdapter;
+import com.capstone.notekeeper.Models.Upload;
 import com.capstone.notekeeper.R;
-import com.capstone.notekeeper.Upload;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,58 +32,51 @@ public class BuyProductFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
-
     private ProgressBar mProgressCircle;
-
     private FirebaseStorage mStorage;
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
+    private List<Upload> mUploads;
+    private Context mContext;
 
-    private List<com.capstone.notekeeper.Upload> mUploads;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        mContext = context;
+        super.onAttach(context);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_image_upload, container, false);
-
+        getActivity().setTitle("Buy Products");
         mRecyclerView = v.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         mProgressCircle = v.findViewById(R.id.progress_circle);
-
         mUploads = new ArrayList<>();
-
-        mAdapter = new ImageAdapter(getActivity(), mUploads);
-
+        mAdapter = new ImageAdapter(mContext,mUploads);
         mRecyclerView.setAdapter(mAdapter);
-
         //mAdapter.setOnItemClickListener(ImagesActivity.this);
-
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
-
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 mUploads.clear();
-
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     upload.setKey(postSnapshot.getKey());
-                        mUploads.add(upload);
+                    mUploads.add(upload);
                 }
-
                 mAdapter.notifyDataSetChanged();
-
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });

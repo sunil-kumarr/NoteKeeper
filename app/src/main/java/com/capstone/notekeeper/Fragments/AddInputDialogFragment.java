@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.capstone.notekeeper.R;
 
@@ -65,7 +66,7 @@ public class AddInputDialogFragment extends DialogFragment implements TextView.O
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
             // Return input text back to activity through the implemented listener
-            AddInputDialogListener listener = (AddInputDialogListener) getActivity();
+            AddInputDialogListener listener = (AddInputDialogListener)getActivity() ;
             listener.onFinishAddInput(mEditText.getText().toString());
 
             // Close the dialog and return back to the parent activity

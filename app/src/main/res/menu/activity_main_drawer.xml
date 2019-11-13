@@ -29,10 +29,6 @@
             android:id="@+id/nav_buy"
             android:icon="@drawable/ic_buy_sell"
             android:title="@string/buy_products" />
-
-        <item
-            android:icon="@drawable/ic_books_1"
-            android:title="@string/menu_study_material" />
         <item
             android:icon="@drawable/ic_lost_items"
             android:title="@string/menu_lost_found" />

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<FrameLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_bloquery"
@@ -11,4 +12,13 @@
             android:textSize="26sp"
             android:divider="@null"
             android:dividerHeight="0dp"/>
-    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        app:fabSize="normal"
+        android:src="@drawable/ic_add_black_24dp"
+        android:id="@+id/add_question"
+        />
+    </FrameLayout>

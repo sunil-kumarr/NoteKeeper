@@ -1,4 +1,4 @@
-package com.capstone.notekeeper;
+package com.capstone.notekeeper.Models;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.Exclude;
@@ -24,7 +24,6 @@ public class Upload {
         if (name.trim().equals("")) {
             name = "No Name";
         }
-
         mName = name;
         mImageUrl = imageUrl;
         mEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -34,9 +33,6 @@ public class Upload {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         Date date = new Date();
         mDate = df.format(date);
-
-
-
     }
 
     public String getName() {

@@ -18,9 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.capstone.notekeeper.Models.Upload;
 import com.capstone.notekeeper.Models.User;
 import com.capstone.notekeeper.R;
-import com.capstone.notekeeper.Upload;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

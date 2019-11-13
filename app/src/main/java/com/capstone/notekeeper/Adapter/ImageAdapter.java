@@ -11,12 +11,14 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.capstone.notekeeper.Fragments.BuyFragment;
+import com.capstone.notekeeper.Models.Upload;
 import com.capstone.notekeeper.R;
-import com.capstone.notekeeper.Upload;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private Context mContext;
@@ -50,12 +52,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         holder.textViewName.setText(uploadCurrent.getName());
         holder.textViewPrice.setText("₹ " + uploadCurrent.getPrice());
 
-//        Picasso.with(mContext)
-//                .load(uploadCurrent.getImageUrl())
-//                .placeholder(R.mipmap.ic_loading)
-//                .fit()
-//                .centerInside()
-//                .into(holder.imageView);
+        Picasso.get()
+                .load(uploadCurrent.getImageUrl())
+                .placeholder(R.drawable.ic_loading)
+                .fit()
+                .centerInside()
+                .into(holder.imageView);
     }
 
     @Override
