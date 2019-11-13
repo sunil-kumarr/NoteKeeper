@@ -36,6 +36,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activity.BrainPrepActivity" />
+        <activity android:name=".Activity.BloqueryActivity" />
+        <activity android:name=".Activity.SingleQuestionActivity" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />
 

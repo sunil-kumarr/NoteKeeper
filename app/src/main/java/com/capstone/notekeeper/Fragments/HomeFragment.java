@@ -47,9 +47,9 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle("Study Materials");
         notesRecyclerView = view.findViewById(R.id.courseRecyclerView);
         ArrayList<NotesDetails> notesList = new ArrayList<>();
-//        for(int i=0;i<10;i++)
-//            notesList.add(new NotesDetails("sunil kumar","Handwritten",
-//                    "This are awesome notes","operating system notes",""));
+        for(int i=0;i<10;i++)
+            notesList.add(new NotesDetails("sunil kumar","Handwritten",
+                    "This are awesome notes","operating system notes",""));
         NotesAdapter notesAdapter = new NotesAdapter(notesList,mContext);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
         notesRecyclerView.setItemAnimator(new DefaultItemAnimator());

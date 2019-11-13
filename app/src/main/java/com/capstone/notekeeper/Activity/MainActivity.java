@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                  fragment = new UploadNotesFragment();
                  break;
             case R.id.nav_ask_quora:
-//                    Toast.makeText(MainActivity.this, "Questions",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, BloqueryActivity.class));
                 break;
             default:
 //                    Toast.makeText(this, "dee", Toast.LENGTH_SHORT).show();
