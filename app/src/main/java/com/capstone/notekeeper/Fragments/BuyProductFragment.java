@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capstone.notekeeper.Adapter.ImageAdapter;
-import com.capstone.notekeeper.Models.Upload;
+import com.capstone.notekeeper.Adapter.ProductDisplayAdapter;
+import com.capstone.notekeeper.Models.Product;
 import com.capstone.notekeeper.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,12 +31,12 @@ import java.util.List;
 public class BuyProductFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
+    private ProductDisplayAdapter mAdapter;
     private ProgressBar mProgressCircle;
     private FirebaseStorage mStorage;
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
-    private List<Upload> mUploads;
+    private List<Product> mProducts;
     private Context mContext;
 
 
@@ -55,8 +55,8 @@ public class BuyProductFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mProgressCircle = v.findViewById(R.id.progress_circle);
-        mUploads = new ArrayList<>();
-        mAdapter = new ImageAdapter(mContext,mUploads);
+        mProducts = new ArrayList<>();
+        mAdapter = new ProductDisplayAdapter(mContext, mProducts);
         mRecyclerView.setAdapter(mAdapter);
         //mAdapter.setOnItemClickListener(ImagesActivity.this);
         mStorage = FirebaseStorage.getInstance();
@@ -64,11 +64,11 @@ public class BuyProductFragment extends Fragment {
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mUploads.clear();
+                mProducts.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
-                    upload.setKey(postSnapshot.getKey());
-                    mUploads.add(upload);
+                    Product product = postSnapshot.getValue(Product.class);
+//                    product.setKey(postSnapshot.getKey());
+                    mProducts.add(product);
                 }
                 mAdapter.notifyDataSetChanged();
                 mProgressCircle.setVisibility(View.INVISIBLE);

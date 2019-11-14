@@ -2,7 +2,6 @@ package com.capstone.notekeeper.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.capstone.notekeeper.Models.Upload;
+import com.capstone.notekeeper.Models.Product;
 import com.capstone.notekeeper.Models.User;
 import com.capstone.notekeeper.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,7 +61,7 @@ public class BuyFragment extends Fragment {
     private ValueEventListener mDBListener;
     DatabaseReference userDatabase;
     private List<User> mUser;
-    private List<Upload> mUploads;
+    private List<Product> mProducts;
 
     @Override
     public void onStart() {
@@ -104,7 +103,7 @@ public class BuyFragment extends Fragment {
         bEmail = mAuth.getInstance().getCurrentUser().getEmail();
 
 
-        mUploads = new ArrayList<>();
+        mProducts = new ArrayList<>();
 
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
@@ -202,12 +201,12 @@ public class BuyFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                mUploads.clear();
+                mProducts.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
-                    upload.setKey(postSnapshot.getKey());
-                    mUploads.add(upload);
+                    Product product = postSnapshot.getValue(Product.class);
+//                    product.setKey(postSnapshot.getKey());
+                    mProducts.add(product);
                 }
             }
 
@@ -247,19 +246,19 @@ public class BuyFragment extends Fragment {
     }
 
     private void deleteProduct(){
-        Upload selectedItem = mUploads.get(position);
-        final String selectedKey = selectedItem.getKey();
-
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-//                startActivity(new Intent(getActivity(), DrawerActivity.class));
-                mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(getActivity(), "Item deleted", Toast.LENGTH_SHORT).show();
-                getActivity().finish();
-            }
-        });
+//        Product selectedItem = mProducts.get(position);
+//        final String selectedKey = selectedItem.getKey();
+//
+//        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+//        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+////                startActivity(new Intent(getActivity(), DrawerActivity.class));
+//                mDatabaseRef.child(selectedKey).removeValue();
+//                Toast.makeText(getActivity(), "Item deleted", Toast.LENGTH_SHORT).show();
+//                getActivity().finish();
+//            }
+//        });
     }
 
     private void sendEmailToSeller() {

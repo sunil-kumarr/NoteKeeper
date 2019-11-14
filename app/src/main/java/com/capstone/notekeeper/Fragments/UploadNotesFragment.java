@@ -79,7 +79,7 @@ public class UploadNotesFragment extends Fragment  {
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        Objects.requireNonNull(getActivity()).setTitle("Upload study material");
+        Objects.requireNonNull(getActivity()).setTitle("Product study material");
         mFileChoose = view.findViewById(R.id.choose_file_btn);
         mUploadFile = view.findViewById(R.id.upload_file_btn);
         mFileNameShow = view.findViewById(R.id.file_name);
@@ -179,10 +179,10 @@ public class UploadNotesFragment extends Fragment  {
             intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
         }
         startActivityForResult(
-                Intent.createChooser(intent, "Select a File to Upload"),
+                Intent.createChooser(intent, "Select a File to Product"),
                 FILE_SELECT_CODE);
     }
-    private String getFileName(Uri uri) {
+    public String getFileName(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
             Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
@@ -258,7 +258,7 @@ public class UploadNotesFragment extends Fragment  {
                         return ref.getDownloadUrl();
                     })
                     .addOnFailureListener(exception -> {
-                        uploadPer.setText("Failed to Upload!");
+                        uploadPer.setText("Failed to Product!");
                     });
         }
     }
