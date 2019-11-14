@@ -59,6 +59,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
 
         notesRecyclerView = findViewById(R.id.courseRecyclerView);
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setIntensity(1);
         mNotes = new ArrayList<>();
         ArrayList<Integer> mColros = new ArrayList<>();
         mColros.add(R.color.blue_500);

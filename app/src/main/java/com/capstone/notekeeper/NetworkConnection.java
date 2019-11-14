@@ -67,7 +67,7 @@
 //                        }
 //                        /*((FragmentActivity) context)
 //                                .getSupportFragmentManager()
-//                                .beginTransaction().replace(R.id.frag_container,new BuyProductFragment())
+//                                .beginTransaction().replace(R.id.frag_container,new BuyProductListFragment())
 //                                .commit();*/
 //                    }
 //                })

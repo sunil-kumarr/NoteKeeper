@@ -1,5 +1,6 @@
 package com.capstone.notekeeper.Fragments;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.capstone.notekeeper.Adapter.ProductDisplayAdapter;
 import com.capstone.notekeeper.Models.Product;
 import com.capstone.notekeeper.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BuyProductFragment extends Fragment {
+public class BuyProductListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ProductDisplayAdapter mAdapter;
@@ -38,6 +40,7 @@ public class BuyProductFragment extends Fragment {
     private ValueEventListener mDBListener;
     private List<Product> mProducts;
     private Context mContext;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
 
     @Override
@@ -49,37 +52,46 @@ public class BuyProductFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_image_upload, container, false);
+        View v = inflater.inflate(R.layout.fragment_product_buy_list, container, false);
         getActivity().setTitle("Buy Products");
-        mRecyclerView = v.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mProgressCircle = v.findViewById(R.id.progress_circle);
+
+        shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
+        shimmerFrameLayout.setRepeatCount(100);
+        shimmerFrameLayout.setIntensity(1);
+        shimmerFrameLayout.setBaseAlpha(0);
+        shimmerFrameLayout.setRepeatMode(ValueAnimator.REVERSE);
         mProducts = new ArrayList<>();
         mAdapter = new ProductDisplayAdapter(mContext, mProducts);
+        mRecyclerView = v.findViewById(R.id.product_list_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
-        //mAdapter.setOnItemClickListener(ImagesActivity.this);
-        mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("products_list");
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mProducts.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Product product = postSnapshot.getValue(Product.class);
-//                    product.setKey(postSnapshot.getKey());
                     mProducts.add(product);
                 }
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
-                mProgressCircle.setVisibility(View.INVISIBLE);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        shimmerFrameLayout.startShimmerAnimation();
     }
 }

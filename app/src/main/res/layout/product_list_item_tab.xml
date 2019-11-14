@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/white_1000"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/show_product_image"
+            android:layout_width="140dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:src="@color/background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <LinearLayout
+            android:id="@+id/show_product_conntainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp"
+            android:padding="@dimen/padding_10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/show_product_image">
+            <TextView
+                android:id="@+id/show_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Headphones"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/show_product_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_800"
+                android:text="Very comfortable headphones"
+                android:ellipsize="end"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"
+                android:maxLines="3"/>
+            <TextView
+                android:id="@+id/show_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rs.1000"
+                android:textSize="16sp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/grey_800"/>
+            <LinearLayout
+                android:id="@+id/container_seller"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="5dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/seller_image"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/grey_200"
+                    android:src="@drawable/ic_person_black_24dp"
+                    />
+                <TextView
+                    android:id="@+id/seller_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/grey_800"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/answer_owner_hint"
+                    android:padding="2dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -97,6 +97,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
     @Override
     public void onResume() {
         super.onResume();
+        shimmerFrameLayout.setIntensity(1);
         shimmerFrameLayout.startShimmerAnimation();
     }
 

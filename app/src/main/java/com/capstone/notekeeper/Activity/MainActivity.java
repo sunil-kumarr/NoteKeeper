@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.notekeeper.Fragments.AddQuestionBottomSheet;
 import com.capstone.notekeeper.Fragments.BlogQueryFragment;
-import com.capstone.notekeeper.Fragments.BuyProductFragment;
+import com.capstone.notekeeper.Fragments.BuyProductListFragment;
 import com.capstone.notekeeper.Fragments.HomeFragment;
 import com.capstone.notekeeper.Fragments.ProfileFragment;
 import com.capstone.notekeeper.Fragments.SellFragment;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_buy:
-                fragment = new BuyProductFragment();
+                fragment = new BuyProductListFragment();
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();

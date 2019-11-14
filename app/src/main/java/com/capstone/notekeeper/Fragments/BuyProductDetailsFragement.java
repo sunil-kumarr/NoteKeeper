@@ -33,7 +33,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyFragment extends Fragment {
+public class BuyProductDetailsFragement extends Fragment {
 
     ImageView pImage;
     private TextView name;
