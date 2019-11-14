@@ -45,6 +45,13 @@
         <activity
             android:name=".Activity.SingleQuestionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".QuizGame.FinalActivity" />
+        <activity android:name=".QuizGame.GameStart" />
+        <activity android:name=".QuizGame.HighScores" />
+        <activity android:name=".QuizGame.QuizActivity" />
+        <activity android:name=".QuizGame.MainActivity" />
+        <activity android:name=".QuizGame.LoginScreen" />
+        <activity android:name=".QuizGame.HomeScreen" />
     </application>
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />

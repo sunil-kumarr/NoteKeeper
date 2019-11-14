@@ -56,7 +56,6 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
                 courseImage.setImageResource(branchImage);
             }
         }
-
         notesRecyclerView = findViewById(R.id.courseRecyclerView);
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
         shimmerFrameLayout.setIntensity(1);
