@@ -1,14 +1,17 @@
 package com.capstone.notekeeper.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capstone.notekeeper.Activity.NoteShowActivity;
 import com.capstone.notekeeper.Models.NotesDetails;
 import com.capstone.notekeeper.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +47,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         holder.mDownloadFile.setOnClickListener(v->{
             DM.DownloadNotes(current);
         });
+        holder.cardView.setOnClickListener(v->{
+            Intent intent = new Intent(mContext, NoteShowActivity.class);
+            intent.putExtra("pdf",current.getFileLink());
+            mContext.startActivity(intent);
+        });
     }
 
     @Override
@@ -56,8 +64,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         TextView NotesNAme,NotesAuthor,NotesType,NotesDescription;
         FloatingActionButton mDownloadFile;
         View mNotesColor;
+        CardView cardView;
         NotesHolder(@NonNull View itemView) {
             super(itemView);
+            cardView =itemView.findViewById(R.id.notesMainCard);
             NotesNAme = itemView.findViewById(R.id.NotesName);
             NotesAuthor = itemView.findViewById(R.id.NotesAuthor);
             NotesType = itemView.findViewById(R.id.NotesType);

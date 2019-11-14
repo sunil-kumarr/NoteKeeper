@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.notekeeper.Activity.SingleQuestionActivity;
 import com.capstone.notekeeper.Adapter.QuestionAdapter;
-import com.capstone.notekeeper.Fragments.AddInputDialogFragment;
 import com.capstone.notekeeper.Models.Question;
 import com.capstone.notekeeper.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +50,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private FloatingActionButton mAddQuestion;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -71,6 +72,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
         getActivity().setTitle("Ask Questions");
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
         // Initialise the adapter
         mQuestionAdapter = new QuestionAdapter();
         // Set BlogQueryFragment(this) as QuestionAdapter's delegate
@@ -93,6 +95,12 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmerAnimation();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         mQuestionsReference.removeEventListener(this);
@@ -100,13 +108,15 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        shimmerFrameLayout.stopShimmerAnimation();
+        shimmerFrameLayout.setVisibility(View.GONE);
         Question question = dataSnapshot.getValue(Question.class);
         mQuestionAdapter.addQuestion(question);
     }
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+        mQuestionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -133,32 +143,37 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
         // The current Question item
         Question questionItem = questions.get(position);
         String questionId = questionItem.getQuestionId();
-
         Intent intent = new Intent(mContext, SingleQuestionActivity.class);
         intent.putExtra(EXTRA_QUESTION_ID_KEY, questionId);
         intent.putExtra(EXTRA_QUESTION_STRING, questionItem.getQuestionString());
-
         startActivity(intent);
     }
 
 
-    public void getQuestion(String inputText) {
-        if (inputText.isEmpty()) {
+    public void sendQuestion(String questionText) {
+        if (questionText.isEmpty()) {
             Toast.makeText(mContext, "Please enter a question...", Toast.LENGTH_SHORT).show();
         } else {
-            String key = mQuestionsReference.push().getKey();
-            String userId = mCurrentUser.getUid();
-
-            Question question = new Question(key, inputText, (long) System.currentTimeMillis(), 0, userId);
-            mQuestionsReference.child(key).setValue(question);
-
-            Toast.makeText(mContext, "Question added!", Toast.LENGTH_SHORT).show();
+            String questionID = mQuestionsReference.push().getKey();
+            if(mCurrentUser!=null && questionID!=null) {
+                String userId = mCurrentUser.getUid();
+                String userImageUrl = mCurrentUser.getPhotoUrl().toString();
+                String userName = mCurrentUser.getDisplayName();
+                Question question = new Question(questionID, questionText, (long) System.currentTimeMillis(), 0,
+                        userId,userImageUrl,userName);
+                mQuestionsReference.child(questionID).setValue(question);
+                Toast.makeText(mContext, "Question added!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(mContext, "Invalid User", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void showEditDialog() {
         FragmentManager fm = fragmentActivity.getSupportFragmentManager();
-        AddInputDialogFragment addInputDialogFragment = AddInputDialogFragment.newInstance("Ask a question");
-        addInputDialogFragment.show(fm, TAG);
+        AddQuestionBottomSheet addQuestionBottomSheet = new AddQuestionBottomSheet();
+        addQuestionBottomSheet.show(fm,addQuestionBottomSheet.getTag());
+//        AddInputDialogFragment addInputDialogFragment = AddInputDialogFragment.newInstance("Ask a question");
+//        addInputDialogFragment.show(fm, TAG);
     }
 }

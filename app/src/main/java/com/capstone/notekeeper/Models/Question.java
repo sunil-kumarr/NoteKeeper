@@ -14,35 +14,86 @@ public class Question {
     private List<Answer> mAnswers = new ArrayList<>();
     private int mNumberOfAnswers = NO_ANSWERS;
     private String mUserId;
-    private int mUserImageResId = NO_IMAGE;
+    private String mUserImageUrl;
+    private String mUserName;
 
     // Creates a no-argument Question object
     public Question() {
         // Default constructor required for calls to DataSnapshot.getValue(Question.class)
     }
 
-    // Creates a new Question object
-    public Question(String questionString, int numberOfAnswers) {
-        setQuestionString(questionString);
-        setNumberOfAnswers(numberOfAnswers);
+    public Question(String mQuestionId, String mQuestionString, long mTimeStamp, int mNumberOfAnswers, String mUserId, String mUserImageUrl, String mUserName) {
+        this.mQuestionId = mQuestionId;
+        this.mQuestionString = mQuestionString;
+        this.mTimeStamp = mTimeStamp;
+        this.mNumberOfAnswers = mNumberOfAnswers;
+        this.mUserId = mUserId;
+        this.mUserImageUrl = mUserImageUrl;
+        this.mUserName = mUserName;
     }
 
-    // Creates a new Question object
-    public Question(String key, String questionString, long timeStamp, int numberOfAnswers) {
-        setQuestionId(key);;
-        setQuestionString(questionString);
-        setTimeStamp(timeStamp);
-        setNumberOfAnswers(numberOfAnswers);
+    public String getmQuestionId() {
+        return mQuestionId;
     }
 
-    // Creates a new Question object
-    public Question(String key, String questionString, long timeStamp, int numberOfAnswers,
-                    String userId) {
-        setQuestionId(key);;
-        setQuestionString(questionString);
-        setTimeStamp(timeStamp);
-        setNumberOfAnswers(numberOfAnswers);
-        setUserId(userId);
+    public void setmQuestionId(String mQuestionId) {
+        this.mQuestionId = mQuestionId;
+    }
+
+    public String getmQuestionString() {
+        return mQuestionString;
+    }
+
+    public void setmQuestionString(String mQuestionString) {
+        this.mQuestionString = mQuestionString;
+    }
+
+    public long getmTimeStamp() {
+        return mTimeStamp;
+    }
+
+    public void setmTimeStamp(long mTimeStamp) {
+        this.mTimeStamp = mTimeStamp;
+    }
+
+    public List<Answer> getmAnswers() {
+        return mAnswers;
+    }
+
+    public void setmAnswers(List<Answer> mAnswers) {
+        this.mAnswers = mAnswers;
+    }
+
+    public int getmNumberOfAnswers() {
+        return mNumberOfAnswers;
+    }
+
+    public void setmNumberOfAnswers(int mNumberOfAnswers) {
+        this.mNumberOfAnswers = mNumberOfAnswers;
+    }
+
+    public String getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
+    }
+
+    public String getmUserImageUrl() {
+        return mUserImageUrl;
+    }
+
+    public void setmUserImageUrl(String mUserImageUrl) {
+        this.mUserImageUrl = mUserImageUrl;
+    }
+
+    public String getmUserName() {
+        return mUserName;
+    }
+
+    public void setmUserName(String mUserName) {
+        this.mUserName = mUserName;
     }
 
     public String getQuestionId() {
@@ -91,13 +142,5 @@ public class Question {
 
     public void setUserId(String userId) {
         mUserId = userId;
-    }
-
-    public int getUserImageResId() {
-        return mUserImageResId;
-    }
-
-    public void setUserImageResId(int userImageResId) {
-        mUserImageResId = userImageResId;
     }
 }

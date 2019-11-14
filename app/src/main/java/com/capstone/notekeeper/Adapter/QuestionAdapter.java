@@ -6,16 +6,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.capstone.notekeeper.Models.Question;
 import com.capstone.notekeeper.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionAdapterViewHolder> {
@@ -39,11 +44,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public QuestionAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View inflate = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.question_list_item, parent, false);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_show_layout, parent, false);
         return new QuestionAdapterViewHolder(inflate);
     }
 
@@ -57,9 +61,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         return mQuestions.size();
     }
 
-    /*
-     * Getters and setter methods
-     */
+
     public QuestionAdapterDelegate getQuestionAdapterDelegate() {
         if (mDelegate == null) {
             return null;
@@ -72,42 +74,39 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
 
     class QuestionAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        // Reference to Question items
         TextView questionString;
         TextView timeStamp;
-        TextView numAnswers;
-        ImageView userImage;
-
+        TextView numAnswers,userName;
+        CircleImageView userImage;
         int position;
-
         public QuestionAdapterViewHolder(View itemView) {
-
             super(itemView);
-            questionString = (TextView) itemView.findViewById(R.id.text_question_string);
-            timeStamp = (TextView) itemView.findViewById(R.id.text_question_time_stamp);
-            numAnswers = (TextView) itemView.findViewById(R.id.text_question_number_of_answers);
-            userImage = (ImageView) itemView.findViewById(R.id.image_question_user_image);
-
+            questionString = itemView.findViewById(R.id.text_question_string);
+            timeStamp = itemView.findViewById(R.id.text_question_time_stamp);
+            numAnswers =  itemView.findViewById(R.id.answer_count);
+            userImage =  itemView.findViewById(R.id.question_owner_image);
+            userName = itemView.findViewById(R.id.question_owner_name);
             itemView.setOnClickListener(this);
         }
 
         void update(int position, Question question) {
-
             this.position = position;
-
             questionString.setText(question.getQuestionString());
-            timeStamp.setText("Submitted: " + formatDate(new Date(question.getTimeStamp())));
+            userName.setText(question.getmUserName());
+            Picasso.get()
+                    .load(question.getmUserImageUrl())
+                    .fit()
+                    .into(userImage);
+            numAnswers.setText(String.format("%d Answers", question.getmNumberOfAnswers()));
+            timeStamp.setText(String.format("Question Added at: %s", formatDate(new Date(question.getTimeStamp()))));
             //numAnswers.setText("Number of answers: " + question.getNumberOfAnswers());
             //userImage.setImageResource(question.getUserImageResId());
         }
-
         // Return a formatted date string (i.e. 1 Jan, 2000 ) from a Date object.
         private String formatDate(Date date) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy");
             return dateFormat.format(date);
         }
-
         // Only method of View.OnClickListener
         @Override
         public void onClick(View view) {

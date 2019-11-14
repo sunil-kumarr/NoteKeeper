@@ -1,107 +1,79 @@
 package com.capstone.notekeeper.Models;
 
 public class Answer {
-
-    private static final int NO_UP_VOTES = 0;
-    private static final int NO_IMAGE = -1;
-
     private String mAnswerId;
     private String mAnswerString;
     private String mQuestionId;
     private long mTimeStamp;
-    private int mNumberUpVotes = NO_UP_VOTES;
     private String mUserId;
-    private int mUserImageResId = NO_IMAGE;
-    private boolean mUserUpVoted = false;
+    private String mUserImageUrl;
+    private String mUserName;
 
-    // Creates a no-argument Answer object
     public Answer() {
-        // Default constructor required for calls to DataSnapshot.getValue(Question.class)
     }
 
-    // Create a new Answer object
-    public Answer(String userId, String key, String answerString, long timeStamp,
-                  int numberUpVotes) {
-        setUserId(userId);
-        setAnswerId(key);
-        setAnswerString(answerString);
-        setTimeStamp(timeStamp);
-        setNumberUpVotes(numberUpVotes);
+    public Answer(String mAnswerId, String mAnswerString, long mTimeStamp, String mUserId, String mUserImageUrl, String mUserName) {
+        this.mAnswerId = mAnswerId;
+        this.mAnswerString = mAnswerString;
+        this.mTimeStamp = mTimeStamp;
+        this.mUserId = mUserId;
+        this.mUserImageUrl = mUserImageUrl;
+        this.mUserName = mUserName;
     }
 
-    // Create a new Answer object
-    public Answer(String userId, String key, String answerString, long timeStamp,
-                  int numberUpVotes, int userImageResId, boolean userUpVoted) {
-        setUserId(userId);
-        setAnswerId(key);
-        setAnswerString(answerString);
-        setTimeStamp(timeStamp);
-        setNumberUpVotes(numberUpVotes);
-        setUserImageResId(userImageResId);
-        setUserUpVoted(userUpVoted);
+    public String getmUserName() {
+        return mUserName;
     }
 
-    public String getAnswerId() {
+    public void setmUserName(String mUserName) {
+        this.mUserName = mUserName;
+    }
+
+    public String getmAnswerId() {
         return mAnswerId;
     }
 
-    public void setAnswerId(String answerId) {
-        mAnswerId = answerId;
+    public void setmAnswerId(String mAnswerId) {
+        this.mAnswerId = mAnswerId;
     }
 
-    public String getAnswerString() {
+    public String getmAnswerString() {
         return mAnswerString;
     }
 
-    public void setAnswerString(String answerString) {
-        mAnswerString = answerString;
+    public void setmAnswerString(String mAnswerString) {
+        this.mAnswerString = mAnswerString;
     }
 
-    public String getQuestionId() {
+    public String getmQuestionId() {
         return mQuestionId;
     }
 
-    public void setQuestionId(String questionId) {
-        mQuestionId = questionId;
+    public void setmQuestionId(String mQuestionId) {
+        this.mQuestionId = mQuestionId;
     }
 
-    public long getTimeStamp() {
+    public long getmTimeStamp() {
         return mTimeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
-        mTimeStamp = timeStamp;
+    public void setmTimeStamp(long mTimeStamp) {
+        this.mTimeStamp = mTimeStamp;
     }
 
-    public int getNumberUpVotes() {
-        return mNumberUpVotes;
-    }
-
-    public void setNumberUpVotes(int numberUpVotes) {
-        mNumberUpVotes = numberUpVotes;
-    }
-
-    public String getUserId() {
+    public String getmUserId() {
         return mUserId;
     }
 
-    public void setUserId(String userId) {
-        mUserId = userId;
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
     }
 
-    public int getUserImageResId() {
-        return mUserImageResId;
+    public String getmUserImageUrl() {
+        return mUserImageUrl;
     }
 
-    public void setUserImageResId(int userImageResId) {
-        mUserImageResId = userImageResId;
-    }
-
-    public boolean isUserUpVoted() {
-        return mUserUpVoted;
-    }
-
-    public void setUserUpVoted(boolean userUpVoted) {
-        mUserUpVoted = userUpVoted;
+    public void setmUserImageUrl(String mUserImageUrl) {
+        this.mUserImageUrl = mUserImageUrl;
     }
 }

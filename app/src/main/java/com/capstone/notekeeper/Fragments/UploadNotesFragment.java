@@ -59,7 +59,7 @@ public class UploadNotesFragment extends Fragment  {
     private NotesDetails mNoteBook;
     private Uri fileUri;
     private String filelink,fileName,author,title,description,typ;
-    ArrayList<String> types;
+    private ArrayList<String> types,branchname;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -89,6 +89,22 @@ public class UploadNotesFragment extends Fragment  {
         mFileTitle = view.findViewById(R.id.edt_course_name);
         mFileAuthor = view.findViewById(R.id.edt_author_name);
         mFileDescription = view.findViewById(R.id.edt_course_description);
+        branchList = view.findViewById(R.id.BranchSpinner);
+        branchname = new ArrayList<>();
+        branchname.add("Computer Science Engineering");
+        branchname.add("Information Technology Engineering");
+        branchname.add("Civil Engineering");
+        branchname.add("Mechanical Engineering");
+        branchname.add("Electrical Engineering");
+        branchname.add("Chemical Engineering");
+        branchname.add("Quantitative Aptitude");
+        branchname.add("Verbal Ability");
+        branchname.add("Logical Reasoning");
+        branchname.add("Verbal Reasoning");
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(mContext,
+                android.R.layout.simple_spinner_dropdown_item,
+                branchname);
+        branchList.setAdapter(spinnerArrayAdapter);
         types = new ArrayList<>();
         types.add("Handwritten");
         types.add("EBook");
@@ -122,7 +138,7 @@ public class UploadNotesFragment extends Fragment  {
             return;
         }
             if(fileUri!=null) {
-                UploadFiles(fileUri);
+                 UploadFiles(fileUri);
                  typ = types.get(notesType.getSelectedItemPosition());
 
             }
@@ -130,7 +146,9 @@ public class UploadNotesFragment extends Fragment  {
     }
     private void addDataToFirestore(String fileUrl){
         mNoteBook = new NotesDetails(author,typ,description,title,fileUrl);
-       DatabaseReference databaseReference = firebaseDatabase.getReference("notes");
+        int branch = branchList.getSelectedItemPosition();
+        String branchPath = branchname.get(branch);
+       DatabaseReference databaseReference = firebaseDatabase.getReference("notes").child(branchPath);
        String keyId = databaseReference.push().getKey();
        databaseReference.child(keyId).setValue(mNoteBook).addOnSuccessListener(aVoid -> {
            Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
@@ -145,14 +163,7 @@ public class UploadNotesFragment extends Fragment  {
     }
     private static final int FILE_SELECT_CODE = 0;
     private void browseDocuments(){
-        String[] mimeTypes =
-                {"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
-                        "application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
-                        "application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
-                        "text/plain",
-                        "application/pdf",
-                        "application/zip"};
-
+        String[] mimeTypes = {"application/pdf"};
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
