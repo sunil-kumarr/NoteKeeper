@@ -21,10 +21,10 @@ import com.capstone.notekeeper.Fragments.AddQuestionBottomSheet;
 import com.capstone.notekeeper.Fragments.BlogQueryFragment;
 import com.capstone.notekeeper.Fragments.BuyProductListFragment;
 import com.capstone.notekeeper.Fragments.HomeFragment;
+import com.capstone.notekeeper.Fragments.PlacementQuizFragment;
 import com.capstone.notekeeper.Fragments.ProfileFragment;
 import com.capstone.notekeeper.Fragments.SellFragment;
 import com.capstone.notekeeper.Fragments.UploadNotesFragment;
-import com.capstone.notekeeper.QuizGame.LoginScreen;
 import com.capstone.notekeeper.R;
 import com.capstone.notekeeper.authentication.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new SellFragment();
                 break;
             case R.id.nav_brainer:
-                startActivity(new Intent(MainActivity.this, LoginScreen.class));
+                 fragment = new PlacementQuizFragment();
                  break;
             case R.id.nav_upload:
                  fragment = new UploadNotesFragment();
