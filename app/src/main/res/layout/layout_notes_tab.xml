@@ -1,163 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notesMainCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="4dp"
-    android:layout_margin="10dp"
-    android:id="@+id/notesMainCard"
+    android:layout_margin="4dp"
+    android:orientation="vertical"
     app:cardBackgroundColor="@color/white_1000"
-    android:orientation="vertical">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-<!--        <TextView-->
-<!--            android:id="@+id/notes_icon_text"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:background="@drawable/circle"-->
-<!--            android:padding="20dp"-->
-<!--            android:text="os"-->
-<!--            android:textAllCaps="true"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/guideline"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-        <View
-            android:id="@+id/NotesColor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/blue_500"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_10">
 
         <TextView
             android:id="@+id/NotesName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:maxLines="2"
             android:text="Operating systems notes"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/guideline"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="4dp"
+            android:background="@drawable/rating_start_back"
+            android:drawableRight="@drawable/ic_star_white_24dp"
+            android:paddingStart="@dimen/padding_10"
+            android:paddingTop="2dp"
+            android:paddingEnd="@dimen/padding_10"
+            android:paddingBottom="2dp"
+            android:text="4.4"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NotesDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:padding="2dp"
+            android:text="@string/long_description"
+            android:textColor="@color/grey_800"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/line1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/NotesName" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="@dimen/padding_10"
+            android:background="@color/grey_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/NotesDescription" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/NotesAuthorImage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_person_black_24dp"
+            app:civ_border_color="@color/grey_800"
+            app:civ_border_width="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line1" />
 
         <TextView
             android:id="@+id/NotesAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_10"
             android:layout_marginTop="2dp"
             android:maxLines="2"
-            android:text="By: Sunil Kumar"
+            android:text="Sunil Kumar"
             android:textColor="@color/grey_800"
-            app:layout_constraintTop_toBottomOf="@id/NotesName"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/NotesAuthorImage"
+            app:layout_constraintTop_toBottomOf="@id/line1" />
 
         <TextView
-            android:id="@+id/NotesType"
+            android:id="@+id/NotesUploadDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_10"
             android:layout_marginTop="2dp"
-            android:text="Type: Handwritten"
+            android:drawableLeft="@drawable/ic_date_range_black_24dp"
+            android:gravity="center"
+            android:text="12 Nov,2019"
             android:textColor="@color/grey_800"
-            app:layout_constraintTop_toBottomOf="@id/NotesAuthor"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            android:textSize="14sp"/>
-        <TextView
-            android:id="@+id/NotesDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:maxLines="3"
-            android:ellipsize="marquee"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="50dp"
-            android:text="This is notes description please download our awesome notes"
-            android:textColor="@color/grey_800"
-            app:layout_constraintTop_toBottomOf="@id/NotesType"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="14sp" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="mini"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/NotesAuthor"
+            app:layout_constraintTop_toBottomOf="@id/line1" />
+
+        <ImageView
             android:id="@+id/NotesDownloadBtn"
-            android:backgroundTint="@color/green_500"
-            android:layout_margin="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_download"
+            android:layout_marginStart="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:rippleColor="@color/yello"
-            app:layout_constraintStart_toEndOf="@id/NotesDescription"
-            android:src="@drawable/ic_download"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="100dp" />
-
-        <!--           <LinearLayout-->
-        <!--               android:layout_width="match_parent"-->
-        <!--               android:layout_height="50dp"-->
-        <!--               android:layout_gravity="bottom"-->
-        <!--               android:padding="5dp"-->
-        <!--               android:orientation="horizontal">-->
-        <!--               <ImageView-->
-        <!--                   android:layout_width="50dp"-->
-        <!--                   android:layout_height="match_parent"-->
-        <!--                   android:src="@drawable/ic_download" />-->
-        <!--&lt;!&ndash;               <RatingBar&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:id="@+id/ratingBar"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   style="?android:attr/ratingBarStyle"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:numStars="6"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:max="5"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:theme="@style/RatingBar"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:stepSize=".5"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:layout_marginStart="10dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:scaleX=".9"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:scaleY=".9"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:transformPivotX="0dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:transformPivotY="0dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                   android:layout_height="match_parent" />&ndash;&gt;-->
-        <!--           </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="50dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_margin="5dp"-->
-<!--            android:layout_height="30dp">-->
-<!--            <ImageView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:src="@drawable/ic_star_black_24dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                />-->
-<!--            <TextView-->
-<!--                android:id="@+id/NotesRating"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="15sp"-->
-<!--                android:gravity="center"-->
-<!--                android:text="3.9"/>-->
-<!--        </LinearLayout>-->
+            app:layout_constraintStart_toEndOf="@id/NotesUploadDate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

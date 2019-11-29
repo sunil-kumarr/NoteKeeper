@@ -4,22 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.NoteShowActivity">
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".Activity.NotesPDFViewActivity">
 
- <WebView
-     android:id="@+id/showNotesWebview"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintEnd_toEndOf="parent"
-     app:layout_constraintTop_toTopOf="parent"
-     app:layout_constraintBottom_toBottomOf="parent"/>
- <ProgressBar
-     android:id="@+id/progress"
-     android:layout_width="50dp"
-     android:layout_height="50dp"
-     app:layout_constraintTop_toTopOf="parent"
-     app:layout_constraintBottom_toBottomOf="parent"
-     app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/book_pdf_toolbar"
+        android:layout_width="match_parent"
+        app:titleTextColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:layout_height="?actionBarSize"
+        android:background="@color/black" />
+
+    <ProgressBar
+        android:id="@+id/book_progress_bar_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/pdfView"
+        app:layout_constraintEnd_toEndOf="@id/pdfView"
+        app:layout_constraintTop_toTopOf="@id/pdfView"
+        app:layout_constraintBottom_toBottomOf="@id/pdfView"
+        android:progressTint="@color/blue_500"
+        android:elevation="1dp" />
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/book_pdf_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/grey_200" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

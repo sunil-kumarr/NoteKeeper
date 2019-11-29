@@ -1,6 +1,8 @@
 package com.capstone.notekeeper.Models;
 
-public class NotesDetails {
+import java.io.Serializable;
+
+public class NotesDetails implements Serializable {
     private String author,type,description,title,fileLink;
 
     public NotesDetails() {

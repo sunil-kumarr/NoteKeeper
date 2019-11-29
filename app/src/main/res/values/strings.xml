@@ -63,4 +63,5 @@
     <string name="question_hint">Start your question with "What","How","Why",etc.</string>
     <string name="sample_question">What are the algorithms required to solve all problems (using c++) in any competitive coding contest?</string>
     <string name="answer_owner_hint">Sunil Kumar at 14:50 on 21 oct,2019</string>
+    <string name="long_description">Layout-Based behaviors are used to shift one view at some other place when you perform a certain task. For example, create a project in Android Studio with Basic Activity template. Now, run the application on your mobile. You will find a Floating Action Button on the screen. Just press the button and you will find a snackbar coming from the bottom of the screen. At the same time, you will notice that the Floating Action Button has moved upwards. After a few seconds the button will again come back to its original position.</string>
 </resources>

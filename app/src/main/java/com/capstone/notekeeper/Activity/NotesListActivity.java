@@ -58,7 +58,6 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
         }
         notesRecyclerView = findViewById(R.id.courseRecyclerView);
         shimmerFrameLayout = findViewById(R.id.shimmer_view_container);
-        shimmerFrameLayout.setIntensity(1);
         mNotes = new ArrayList<>();
         ArrayList<Integer> mColros = new ArrayList<>();
         mColros.add(R.color.blue_500);
@@ -80,7 +79,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
                    // Toast.makeText(NotesListActivity.this, ""+notes.getTitle(), Toast.LENGTH_SHORT).show();
                     mNotes.add(notes);
                 }
-                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 notesAdapter.notifyDataSetChanged();
             }
@@ -95,7 +94,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
 
 
     @Override
-    public long DownloadNotes(NotesDetails fileUrl) {
+    public void DownloadNotes(NotesDetails fileUrl) {
         long output = 0;
         Toast.makeText(this, "Download Started...", Toast.LENGTH_SHORT).show();
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
@@ -108,7 +107,6 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
         }
         IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(downloadcomplete,intentFilter);
-        return output;
     }
     BroadcastReceiver downloadcomplete = new BroadcastReceiver() {
         @Override
@@ -122,6 +120,6 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
     @Override
     public void onResume() {
         super.onResume();
-        shimmerFrameLayout.startShimmerAnimation();
+        shimmerFrameLayout.startShimmer();
     }
 }

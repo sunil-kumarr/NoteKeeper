@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.capstone.notekeeper">
 
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <dist:module dist:instant="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_atom"
@@ -11,7 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.NoteShowActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Activity.StudyMaterialDetails"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".Activity.NotesPDFViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.NotesListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -40,8 +54,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activity.BrainPrepActivity" />
-        <activity android:name=".Fragments.BlogQueryFragment"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Fragments.BlogQueryFragment"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.SingleQuestionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -53,13 +68,5 @@
         <activity android:name=".QuizGame.LoginScreen" />
         <activity android:name=".QuizGame.HomeScreen" />
     </application>
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
-    <dist:module dist:instant="true" />
 
 </manifest>

@@ -56,10 +56,6 @@ public class BuyProductListFragment extends Fragment {
         getActivity().setTitle("Buy Products");
 
         shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
-        shimmerFrameLayout.setRepeatCount(100);
-        shimmerFrameLayout.setIntensity(1);
-        shimmerFrameLayout.setBaseAlpha(0);
-        shimmerFrameLayout.setRepeatMode(ValueAnimator.REVERSE);
         mProducts = new ArrayList<>();
         mAdapter = new ProductDisplayAdapter(mContext, mProducts);
         mRecyclerView = v.findViewById(R.id.product_list_recycler_view);
@@ -76,7 +72,7 @@ public class BuyProductListFragment extends Fragment {
                     Product product = postSnapshot.getValue(Product.class);
                     mProducts.add(product);
                 }
-                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 mAdapter.notifyDataSetChanged();
             }
@@ -92,6 +88,6 @@ public class BuyProductListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        shimmerFrameLayout.startShimmerAnimation();
+        shimmerFrameLayout.startShimmer();
     }
 }

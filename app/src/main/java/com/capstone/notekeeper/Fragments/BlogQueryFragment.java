@@ -97,8 +97,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
     @Override
     public void onResume() {
         super.onResume();
-        shimmerFrameLayout.setIntensity(1);
-        shimmerFrameLayout.startShimmerAnimation();
+        shimmerFrameLayout.startShimmer();
     }
 
     @Override
@@ -109,7 +108,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        shimmerFrameLayout.stopShimmerAnimation();
+        shimmerFrameLayout.stopShimmer();
         shimmerFrameLayout.setVisibility(View.GONE);
         Question question = dataSnapshot.getValue(Question.class);
         mQuestionAdapter.addQuestion(question);
