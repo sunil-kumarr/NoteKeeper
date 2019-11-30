@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.capstone.notekeeper.Adapter.NotesAdapter;
-import com.capstone.notekeeper.Models.NotesDetails;
+import com.capstone.notekeeper.Models.NoteBookModel;
 import com.capstone.notekeeper.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +35,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
     private ImageView mTitleImage,courseImage;
     private TextView mTitleName,courseName;
     private static final String TAG = "HomeFragment";
-    private ArrayList<NotesDetails> mNotes;
+    private ArrayList<NoteBookModel> mNotes;
     private ShimmerFrameLayout shimmerFrameLayout;
     private String branch;
     private Integer branchImage;
@@ -75,7 +75,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mNotes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    NotesDetails notes = postSnapshot.getValue(NotesDetails.class);
+                    NoteBookModel notes = postSnapshot.getValue(NoteBookModel.class);
                    // Toast.makeText(NotesListActivity.this, ""+notes.getTitle(), Toast.LENGTH_SHORT).show();
                     mNotes.add(notes);
                 }
@@ -94,13 +94,17 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
 
 
     @Override
-    public void DownloadNotes(NotesDetails fileUrl) {
+    public void DownloadNotes(NoteBookModel fileUrl) {
+        downloaderCustom(fileUrl);
+    }
+
+    private void downloaderCustom(NoteBookModel fileUrl) {
         long output = 0;
         Toast.makeText(this, "Download Started...", Toast.LENGTH_SHORT).show();
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fileUrl.getFileLink()));
-        request.setTitle(fileUrl.getTitle());
-        request.setDescription(fileUrl.getDescription());
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fileUrl.getBookLink()));
+        request.setTitle(fileUrl.getBookTitle());
+        request.setDescription(fileUrl.getBookDescription());
         request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "NoteKeeper");
         if (downloadManager != null) {
             output = downloadManager.enqueue(request);
@@ -108,6 +112,7 @@ public class NotesListActivity extends AppCompatActivity  implements  NotesAdapt
         IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(downloadcomplete,intentFilter);
     }
+
     BroadcastReceiver downloadcomplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

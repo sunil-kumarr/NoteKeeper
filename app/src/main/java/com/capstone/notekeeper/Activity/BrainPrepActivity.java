@@ -401,7 +401,7 @@ public class BrainPrepActivity extends AppCompatActivity {
         playgn = (TextView) findViewById(R.id.playagain);
         mainrelativelayout = (RelativeLayout) findViewById(R.id.mathsrelativeLayout);
         optionRelativeLayout = (RelativeLayout) findViewById(R.id.optionrelativlayout);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.user_profile_image);
         v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
 
     }

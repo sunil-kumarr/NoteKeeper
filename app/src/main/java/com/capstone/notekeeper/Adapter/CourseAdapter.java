@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,33 +24,67 @@ import java.util.ArrayList;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHolder> {
     private ArrayList<CourseType> courseList;
     private Context mContext;
-    public CourseAdapter(ArrayList<CourseType> course, Context context){
+    private String mCaller;
+    private String selectedItem;
+    private ArrayList<LinearLayout> mLayoutArrayList;
+
+    public CourseAdapter(ArrayList<CourseType> course, Context context, String caller) {
         mContext = context;
         courseList = course;
+        mCaller = caller;
+       mLayoutArrayList = new ArrayList<>();
     }
+
+    public String getSelectedItem() {
+        return selectedItem;
+    }
+
     @NonNull
     @Override
     public CourseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.layout_course_tab,parent,false);
-        return new CourseHolder(v);
+        View layout = null;
+        if (mCaller.equals("home")) {
+            layout = LayoutInflater.from(mContext).inflate(R.layout.layout_course_tab, parent, false);
+        } else {
+            layout = LayoutInflater.from(mContext).inflate(R.layout.layout_course_category_tab, parent, false);
+        }
+        return new CourseHolder(layout);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CourseHolder holder, int position) {
         CourseType currentCourse = courseList.get(position);
-       holder.CourseName.setText(currentCourse.getCourseName());
-       holder.CourseImage.setImageResource(currentCourse.getCourseImage());
-       holder.courseTab.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent i = new Intent(mContext, NotesListActivity.class);
-               Bundle b = new Bundle();
-               b.putString("coursename",currentCourse.getCourseName());
-               b.putInt("courseimage",currentCourse.getCourseImage());
-               i.putExtras(b);
-               mContext.startActivity(i);
-           }
-       });
+        holder.CourseName.setText(currentCourse.getCourseName());
+        holder.CourseImage.setImageResource(currentCourse.getCourseImage());
+        if (mCaller.equals("home")) {
+            holder.courseTab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent i = new Intent(mContext, NotesListActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("coursename", currentCourse.getCourseName());
+                    b.putInt("courseimage", currentCourse.getCourseImage());
+                    i.putExtras(b);
+                    mContext.startActivity(i);
+                }
+            });
+        } else if (mCaller.equals("upload")) {
+            if(!mLayoutArrayList.contains(holder.courseTab2)) {
+                mLayoutArrayList.add(holder.courseTab2);
+            }
+            holder.courseTab2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View pView) {
+                    for(LinearLayout layout:mLayoutArrayList){
+                        layout.setBackgroundResource(R.drawable.category_box);
+                    }
+                    holder.courseTab2.setBackgroundResource(R.color.green_300);
+                    selectedItem = currentCourse.getCourseName();
+                }
+            });
+
+        }
 
     }
 
@@ -59,15 +94,22 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         return courseList.size();
     }
 
-    class CourseHolder extends RecyclerView.ViewHolder{
+    class CourseHolder extends RecyclerView.ViewHolder {
         ImageView CourseImage;
         TextView CourseName;
         MaterialCardView courseTab;
+        LinearLayout courseTab2;
+
         CourseHolder(@NonNull View itemView) {
             super(itemView);
             CourseImage = itemView.findViewById(R.id.courseImage);
             CourseName = itemView.findViewById(R.id.courseName);
-            courseTab = itemView.findViewById(R.id.courseTab);
+            if (mCaller.equals("home")) {
+                courseTab = itemView.findViewById(R.id.courseTab);
+            } else {
+                courseTab2 = itemView.findViewById(R.id.container_tab);
+            }
         }
     }
+
 }

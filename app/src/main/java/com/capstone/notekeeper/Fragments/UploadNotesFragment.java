@@ -3,10 +3,7 @@ package com.capstone.notekeeper.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +24,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.capstone.notekeeper.Models.NotesDetails;
+import com.capstone.notekeeper.Adapter.CourseAdapter;
+import com.capstone.notekeeper.Models.CourseType;
+import com.capstone.notekeeper.Models.NoteBookModel;
 import com.capstone.notekeeper.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.capstone.notekeeper.authentication.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,18 +52,25 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class UploadNotesFragment extends Fragment  {
     private Context mContext;
-    private Button mFileChoose,mUploadFile;
-    private TextView mFileNameShow,uploadPer;
-    private EditText mFileTitle,mFileAuthor,mFileDescription;
-    private AppCompatSpinner branchList,notesType;
-    private FirebaseStorage firebaseStorage;
-    private FirebaseFirestore firebaseFirestore;
-    private FirebaseDatabase firebaseDatabase;
+    private Button mFileChoose, mUploadFile,mNextStep;
+    private TextView mFileNameShow;
+    private EditText mFileTitle, mFileDescription;
     private ProgressBar mProgressBar;
-    private NotesDetails mNoteBook;
+    private CardView mProgressShowCard;
+    private RecyclerView mRecyclerView;
+    private ConstraintLayout mStepTwo,mStepOne;
+
+    private NoteBookModel mNoteBook;
+    private FirebaseStorage firebaseStorage;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mCurrentUser;
     private Uri fileUri;
-    private String filelink,fileName,author,title,description,typ;
-    private ArrayList<String> types,branchname;
+
+    private String filelink, fileName, title, description;
+    private ArrayList<CourseType> Courses;
+    private String mCategory;
+    private CourseAdapter myAdapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,47 +85,40 @@ public class UploadNotesFragment extends Fragment  {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mCurrentUser = mFirebaseAuth.getCurrentUser();
+        if (mCurrentUser == null) {
+            startActivity(new Intent(mContext, LoginActivity.class));
+            Objects.requireNonNull(getActivity()).finish();
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         firebaseStorage = FirebaseStorage.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        Objects.requireNonNull(getActivity()).setTitle("Product study material");
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
         mFileChoose = view.findViewById(R.id.choose_file_btn);
         mUploadFile = view.findViewById(R.id.upload_file_btn);
         mFileNameShow = view.findViewById(R.id.file_name);
-        uploadPer = view.findViewById(R.id.upload_percentage);
-        notesType = view.findViewById(R.id.NotesTypeSpinner);
-        mProgressBar = view.findViewById(R.id.file_upload_bar);
+        mProgressBar = view.findViewById(R.id.file_upload_progressbar);
         mFileTitle = view.findViewById(R.id.edt_course_name);
-        mFileAuthor = view.findViewById(R.id.edt_author_name);
         mFileDescription = view.findViewById(R.id.edt_course_description);
-        branchList = view.findViewById(R.id.BranchSpinner);
-        branchname = new ArrayList<>();
-        branchname.add("Computer Science Engineering");
-        branchname.add("Information Technology Engineering");
-        branchname.add("Civil Engineering");
-        branchname.add("Mechanical Engineering");
-        branchname.add("Electrical Engineering");
-        branchname.add("Chemical Engineering");
-        branchname.add("Quantitative Aptitude");
-        branchname.add("Verbal Ability");
-        branchname.add("Logical Reasoning");
-        branchname.add("Verbal Reasoning");
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_spinner_dropdown_item,
-                branchname);
-        branchList.setAdapter(spinnerArrayAdapter);
-        types = new ArrayList<>();
-        types.add("Handwritten");
-        types.add("EBook");
-        types.add("Computerized");
-        types.add("Others");
-        ArrayAdapter<String> noteTypeAdapter =
-                new ArrayAdapter<>(mContext,android.R.layout.simple_spinner_dropdown_item,types);
-        notesType.setAdapter(noteTypeAdapter);
+        mProgressShowCard = view.findViewById(R.id.upload_card_container);
+        mRecyclerView = view.findViewById(R.id.category_rec_View);
+        mNextStep = view.findViewById(R.id.upload_go_to_next_step);
+        mStepOne = view.findViewById(R.id.course_category_container);
+        mStepTwo =view.findViewById(R.id.course_details_container);
 
-        firebaseStorage = FirebaseStorage.getInstance();
+        createCourse();
+         myAdapter = new CourseAdapter(Courses, mContext,"upload");
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mRecyclerView.setAdapter(myAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
         mFileChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,45 +128,116 @@ public class UploadNotesFragment extends Fragment  {
         mUploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadDataToFirebase();
+                getDataAndStartUpload();
+            }
+        });
+        mNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View pView) {
+                mStepOne.setVisibility(View.GONE);
+                mStepTwo.setVisibility(View.VISIBLE);
+                mCategory = myAdapter.getSelectedItem();
+               // Toast.makeText(mContext, ""+myAdapter.getSelectedItem(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void uploadDataToFirebase() {
+    private void createCourse() {
+        Courses = new ArrayList<>();
+        String[] coursename = mContext.getResources().getStringArray(R.array.course_titles);
+        Courses.add(new CourseType(coursename[0], R.drawable.ic_browser));
+        Courses.add(new CourseType(coursename[1], R.drawable.ic_information));
+        Courses.add(new CourseType(coursename[2], R.drawable.ic_mechanic));
+        Courses.add(new CourseType(coursename[3], R.drawable.ic_electrician));
+        Courses.add(new CourseType(coursename[4], R.drawable.ic_engineer));
+        Courses.add(new CourseType(coursename[5], R.drawable.ic_bio));
+        Courses.add(new CourseType(coursename[6], R.drawable.ic_chemical));
+        Courses.add(new CourseType(coursename[7], R.drawable.ic_leaf));
+        Courses.add(new CourseType(coursename[8], R.drawable.ic_pie));
+        Courses.add(new CourseType(coursename[9], R.drawable.ic_dress));
+        Courses.add(new CourseType(coursename[10], R.drawable.ic_balance));
+        Courses.add(new CourseType(coursename[11], R.drawable.ic_idea));
+        Courses.add(new CourseType(coursename[12], R.drawable.ic_idea));
+        Courses.add(new CourseType(coursename[13], R.drawable.ic_idea));
+        Courses.add(new CourseType(coursename[14], R.drawable.ic_idea));
+    }
+    private void getDataAndStartUpload() {
         title = mFileTitle.getText().toString();
-        author = mFileAuthor.getText().toString();
         description = mFileDescription.getText().toString();
-        if(TextUtils.isEmpty(title) || TextUtils.isEmpty(author)||TextUtils.isEmpty(description)){
+        mFileTitle.setEnabled(false);
+        mFileDescription.setEnabled(false);
+        mFileChoose.setEnabled(false);
+        Toast.makeText(mContext, "g"+mCategory, Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
             Toast.makeText(mContext, "Invalid /Incomplete input", Toast.LENGTH_SHORT).show();
             return;
         }
-            if(fileUri!=null) {
-                 UploadFiles(fileUri);
-                 typ = types.get(notesType.getSelectedItemPosition());
-
-            }
+        if (fileUri != null) {
+            mProgressShowCard.setVisibility(View.VISIBLE);
+            UploadFiles(fileUri);
+        }
 
     }
-    private void addDataToFirestore(String fileUrl){
-        mNoteBook = new NotesDetails(author,typ,description,title,fileUrl);
-        int branch = branchList.getSelectedItemPosition();
-        String branchPath = branchname.get(branch);
-       DatabaseReference databaseReference = firebaseDatabase.getReference("notes").child(branchPath);
-       String keyId = databaseReference.push().getKey();
-       databaseReference.child(keyId).setValue(mNoteBook).addOnSuccessListener(aVoid -> {
-           Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
-           mFileTitle.setText("");
-           mFileDescription.setText("");
-           mFileAuthor.setText("");
-           notesType.setSelection(0);
-           mFileNameShow.setText("");
-           uploadPer.setText("");
-           mFileTitle.requestFocus();
-       });
+
+    private void UploadFiles(Uri pFileUri) {
+        if (pFileUri != null) {
+            StorageReference storageReference = firebaseStorage.getReference();
+            StorageReference ref = storageReference.child("files/" + fileName);
+            ref.putFile(pFileUri)
+                    .addOnSuccessListener(downloadUri -> {
+                        ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                            filelink = uri.toString();
+                            addNoteBookToFirebase(filelink);
+                        });
+                    })
+                    .addOnProgressListener(pTaskSnapshot -> {
+                        double progress = (100.0 * pTaskSnapshot.getBytesTransferred()) / pTaskSnapshot.getTotalByteCount();
+                        mProgressBar.setProgress((int) progress);
+                    })
+                    .continueWithTask(task -> {
+                        if (!task.isSuccessful()) {
+                            throw Objects.requireNonNull(task.getException());
+                        }
+                        return ref.getDownloadUrl();
+                    })
+                    .addOnFailureListener(exception -> {
+                        Toast.makeText(mContext, "Upload Failed!", Toast.LENGTH_SHORT).show();
+                        mProgressShowCard.setVisibility(View.GONE);
+                    });
+        }
     }
+
+    private void addNoteBookToFirebase(String fileUrl) {
+        String uid = mCurrentUser.getUid();
+        String name = mCurrentUser.getDisplayName();
+        mCategory = myAdapter.getSelectedItem();
+        mNoteBook = new NoteBookModel(name,uid, description,title, filelink, System.currentTimeMillis(), 0);
+        DatabaseReference databaseReference = firebaseDatabase.getReference("notes").child(mCategory);
+        String notebookID = databaseReference.push().getKey();
+        if(notebookID!=null) {
+            databaseReference.child(notebookID).setValue(mNoteBook).addOnSuccessListener(aVoid -> {
+                Toast.makeText(mContext, "Successfully uploaded", Toast.LENGTH_SHORT).show();
+                changeLayoutSettigns();
+            });
+        }
+    }
+
+    private void changeLayoutSettigns() {
+        mProgressShowCard.setVisibility(View.GONE);
+        mStepTwo.setVisibility(View.GONE);
+        mStepOne.setVisibility(View.VISIBLE);
+        mFileTitle.setText("");
+        mFileTitle.setEnabled(true);
+        mFileDescription.setEnabled(true);
+        mFileChoose.setEnabled(true);
+        mFileDescription.setText("");
+        mFileNameShow.setText("upload study material(* only PDF format)");
+        mFileTitle.requestFocus();
+    }
+
     private static final int FILE_SELECT_CODE = 0;
-    private void browseDocuments(){
+
+    private void browseDocuments() {
         String[] mimeTypes = {"application/pdf"};
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -176,12 +251,13 @@ public class UploadNotesFragment extends Fragment  {
             for (String mimeType : mimeTypes) {
                 mimeTypesStr += mimeType + "|";
             }
-            intent.setType(mimeTypesStr.substring(0,mimeTypesStr.length() - 1));
+            intent.setType(mimeTypesStr.substring(0, mimeTypesStr.length() - 1));
         }
         startActivityForResult(
                 Intent.createChooser(intent, "Select a File to Product"),
                 FILE_SELECT_CODE);
     }
+
     public String getFileName(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
@@ -227,39 +303,5 @@ public class UploadNotesFragment extends Fragment  {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void UploadFiles(Uri pFileUri) {
-        if (pFileUri != null) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            uploadPer.setVisibility(View.VISIBLE);
-            StorageReference storageReference = firebaseStorage.getReference();
-            StorageReference ref = storageReference.child("files/"+fileName);
-            Toast.makeText(mContext, "Uploading files", Toast.LENGTH_SHORT).show();
-            ref.putFile(pFileUri)
-                    .addOnSuccessListener(downloadUri -> {
-                         mProgressBar.setVisibility(View.GONE);
-                         uploadPer.setText("Uploaded Successfully.");
-                          //Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
-                          ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                             filelink = uri.toString();
-                              addDataToFirestore(filelink);
-                          });
 
-                          Log.d("Firebase url", "" + downloadUri.toString());
-                       })
-                    .addOnProgressListener(pTaskSnapshot -> {
-                        double progress = (100.0 * pTaskSnapshot.getBytesTransferred()) / pTaskSnapshot.getTotalByteCount();
-                        mProgressBar.setProgress((int) progress);
-                        uploadPer.setText(String.format("Uploading File (%.2s/100)", String.valueOf(progress)));
-                    })
-                    .continueWithTask(task -> {
-                        if (!task.isSuccessful()) {
-                            throw Objects.requireNonNull(task.getException());
-                        }
-                        return ref.getDownloadUrl();
-                    })
-                    .addOnFailureListener(exception -> {
-                        uploadPer.setText("Failed to Product!");
-                    });
-        }
-    }
 }

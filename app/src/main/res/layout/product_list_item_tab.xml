@@ -24,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <LinearLayout
-            android:id="@+id/show_product_conntainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -66,14 +65,12 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/grey_800"/>
             <LinearLayout
-                android:id="@+id/container_seller"
                 android:layout_width="wrap_content"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="5dp">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/seller_image"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     app:civ_border_color="@color/black"
@@ -82,7 +79,6 @@
                     android:src="@drawable/ic_person_black_24dp"
                     />
                 <TextView
-                    android:id="@+id/seller_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"

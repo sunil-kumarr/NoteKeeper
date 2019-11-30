@@ -49,7 +49,6 @@
         app:layout_constraintTop_toBottomOf="@id/book_tool_bar">
 
         <TextView
-            android:id="@+id/book_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -116,18 +115,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <View-->
-<!--                android:id="@+id/line1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0.5dp"-->
-<!--                android:layout_marginStart="@dimen/padding_10"-->
-<!--                android:layout_marginTop="@dimen/padding_10"-->
-<!--                android:layout_marginEnd="@dimen/padding_10"-->
-<!--                android:layout_marginBottom="@dimen/padding_10"-->
-<!--                android:background="@color/DimGray"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/book_description" />-->
+            <!--            <View-->
+            <!--                android:id="@+id/line1"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0.5dp"-->
+            <!--                android:layout_marginStart="@dimen/padding_10"-->
+            <!--                android:layout_marginTop="@dimen/padding_10"-->
+            <!--                android:layout_marginEnd="@dimen/padding_10"-->
+            <!--                android:layout_marginBottom="@dimen/padding_10"-->
+            <!--                android:background="@color/DimGray"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/book_description" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -140,20 +139,19 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_action_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/book_action_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/book_download"
                 android:layout_width="0dp"
+                android:id="@+id/book_download_Btn"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
@@ -166,7 +164,6 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:id="@+id/book_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -178,7 +175,7 @@
                 android:src="@drawable/ic_share" />
 
             <ImageView
-                android:id="@+id/book_rate_it"
+                android:id="@+id/book_add_rating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -190,19 +187,28 @@
                 android:src="@drawable/ic_rate" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/book_owner_details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="1dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
+                android:id="@+id/auther_btn"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:src="@drawable/ic_author" />
+                android:src="@drawable/ic_author"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="1dp" />
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
+    <include
+        layout="@layout/fragment_rating_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

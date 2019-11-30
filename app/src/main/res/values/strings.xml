@@ -5,7 +5,6 @@
     <dimen name="padding_10">10dp</dimen>
     <string name="app_name">NoteKeeper</string>
     <string name="action_sign_in_short">Register</string>
-    <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
     <string name="title_activity_login">Sign in</string>
@@ -26,42 +25,41 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb2448040282118815</string>
     <string name="menu_home">Home</string>
     <string name="menu_upload">Upload Study Material</string>
-    <string name="menu_sell_buy">Buy and Sell</string>
     <string name="menu_lost_found">Lost and Found</string>
-    <string name="menu_study_material">Study material</string>
     <string name="menu_ask_questions">Ask Questions</string>
     <string name="menu_logout">Logout</string>
-    <string name="title_activity_settings">Settings</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
-    <string name="title_activity_login_screen">LoginScreen</string>
-    <string name="title_activity_game_start">GameStart</string>
-    <string name="title_activity_quiz">QuizActivity</string>
-    <string name="title_activity_final">FinalActivity</string>
-    <string name="title_activity_high_scores">HighScores</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
     <string name="brain_teaser">Brain Teaser</string>
     <string name="buy_products">Buy Products</string>
     <string name="sell_products">Sell Products</string>
-    <string name="profile">Profile</string>
     <string name="question_hint">Start your question with "What","How","Why",etc.</string>
     <string name="sample_question">What are the algorithms required to solve all problems (using c++) in any competitive coding contest?</string>
     <string name="answer_owner_hint">Sunil Kumar at 14:50 on 21 oct,2019</string>
     <string name="long_description">Layout-Based behaviors are used to shift one view at some other place when you perform a certain task. For example, create a project in Android Studio with Basic Activity template. Now, run the application on your mobile. You will find a Floating Action Button on the screen. Just press the button and you will find a snackbar coming from the bottom of the screen. At the same time, you will notice that the Floating Action Button has moved upwards. After a few seconds the button will again come back to its original position.</string>
+
+
+      <integer-array name="course_images">
+
+      </integer-array>
+    <string-array name="course_titles">
+        <item>Computer Science Engineering</item>
+        <item>Information Technology Engineering</item>
+        <item>Civil Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Chemical Engineering</item>
+        <item>Bio Engineering</item>
+        <item>School of Agriculture</item>
+        <item>School of Business</item>
+        <item>Fashion Technology</item>
+        <item>School of Law and Policy</item>
+        <item>Quantitative Aptitude</item>
+        <item>Verbal Ability</item>
+        <item>Logical Reasoning</item>
+        <item>Verbal Reasoning</item>
+    </string-array>
+
+
 </resources>

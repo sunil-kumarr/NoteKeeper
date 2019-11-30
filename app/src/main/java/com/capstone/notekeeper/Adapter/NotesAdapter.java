@@ -2,10 +2,11 @@ package com.capstone.notekeeper.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,17 +15,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.notekeeper.Activity.StudyMaterialDetails;
-import com.capstone.notekeeper.Models.NotesDetails;
+import com.capstone.notekeeper.Models.NoteBookModel;
 import com.capstone.notekeeper.R;
 
 import java.util.ArrayList;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder> {
-    private ArrayList<NotesDetails> notesList;
+    private ArrayList<NoteBookModel> notesList;
     private ArrayList<Integer> mColor;
     private DownloadData DM;
     private Context mContext;
-    public NotesAdapter(ArrayList<NotesDetails> course, Context context,ArrayList<Integer> colorlist){
+    private Animation bounce;
+    public NotesAdapter(ArrayList<NoteBookModel> course, Context context, ArrayList<Integer> colorlist){
         mContext = context;
         notesList = course;
         mColor = colorlist;
@@ -39,12 +41,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
 
     @Override
     public void onBindViewHolder(@NonNull NotesHolder holder, int position) {
-        NotesDetails current = notesList.get(position);
-        holder.NotesTitle.setText(current.getTitle());
-        holder.NotesAuthor.setText(String.format("By: %s", current.getAuthor()));
-        holder.NotesDescription.setText(current.getDescription());
+        NoteBookModel current = notesList.get(position);
+        holder.NotesTitle.setText(current.getBookTitle());
+        holder.NotesDescription.setText(current.getBookDescription());
+        bounce = AnimationUtils.loadAnimation(mContext,R.anim.bounce);
 //        holder.NotesType.setText(String.format("Type: %s", current.getType()));
         holder.mDownloadFile.setOnClickListener(v->{
+            holder.mDownloadFile.startAnimation(bounce);
             DM.DownloadNotes(current);
         });
         holder.cardView.setOnClickListener(v->{
@@ -76,6 +79,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
         }
     }
     public interface DownloadData{
-         void DownloadNotes(NotesDetails notes);
+         void DownloadNotes(NoteBookModel notes);
     }
 }

@@ -25,6 +25,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageRegistrar;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class NotesPDFViewActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mStorageReference;
+    private FileDownloadTask mFileDownloadTask;
     private String book_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_show);
         mFirebaseStorage = FirebaseStorage.getInstance();
@@ -49,7 +50,7 @@ public class NotesPDFViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         book_url = intent.getStringExtra("book_url");
         String book_title = intent.getStringExtra("book_title");
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
             getSupportActionBar().setTitle(book_title);
@@ -71,10 +72,16 @@ public class NotesPDFViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(android.R.id.home == item.getItemId()){
+        if (android.R.id.home == item.getItemId()) {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mFileDownloadTask.cancel();
     }
 
     void downloadFileSomewhere() {
@@ -82,37 +89,37 @@ public class NotesPDFViewActivity extends AppCompatActivity {
             mStorageReference = mFirebaseStorage.getReferenceFromUrl(book_url);
             try {
                 File localFile = File.createTempFile("temp", "pdf");
-                mStorageReference.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot pTaskSnapshot) {
-                                mProgress.setVisibility(View.GONE);
-                                pdfView.fromFile(localFile)
-                                        .enableSwipe(true)
-                                        .swipeHorizontal(false)
-                                        .enableDoubletap(true)
-                                        .defaultPage(0)
-                                        .enableAnnotationRendering(false)
-                                        .password(null)
-                                        .scrollHandle(null)
-                                        .enableAntialiasing(true)
-                                        .spacing(0)
-                                        .onError(new OnErrorListener() {
-                                            @Override
-                                            public void onError(Throwable t) {
-                                                Toast.makeText(NotesPDFViewActivity.this, "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .onLoad(new OnLoadCompleteListener() {
-                                            @Override
-                                            public void loadComplete(int nbPages) {
-                                                Toast.makeText(NotesPDFViewActivity.this, "pages: " + nbPages, Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .pageFitPolicy(FitPolicy.WIDTH)
-                                        .load();
-                            }
-                        })
+                mFileDownloadTask = mStorageReference.getFile(localFile);
+                mFileDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot pTaskSnapshot) {
+                        mProgress.setVisibility(View.GONE);
+                        pdfView.fromFile(localFile)
+                                .enableSwipe(true)
+                                .swipeHorizontal(false)
+                                .enableDoubletap(true)
+                                .defaultPage(0)
+                                .enableAnnotationRendering(false)
+                                .password(null)
+                                .scrollHandle(null)
+                                .enableAntialiasing(true)
+                                .spacing(0)
+                                .onError(new OnErrorListener() {
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        Toast.makeText(NotesPDFViewActivity.this, "Error " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .onLoad(new OnLoadCompleteListener() {
+                                    @Override
+                                    public void loadComplete(int nbPages) {
+                                        Toast.makeText(NotesPDFViewActivity.this, "pages: " + nbPages, Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .pageFitPolicy(FitPolicy.WIDTH)
+                                .load();
+                    }
+                })
                         .addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(@NonNull FileDownloadTask.TaskSnapshot pTaskSnapshot) {

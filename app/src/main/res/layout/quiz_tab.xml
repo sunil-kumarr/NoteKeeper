@@ -15,7 +15,6 @@
         android:padding="@dimen/padding_10">
 
         <LinearLayout
-            android:id="@+id/container_linear1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,7 +24,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/quiz_tag_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_local_offer_black_24dp"
@@ -34,7 +32,6 @@
                 android:textColor="@color/grey_700" />
 
             <TextView
-                android:id="@+id/quiz_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -45,7 +42,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/quiz_time_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 ques | 20 min"

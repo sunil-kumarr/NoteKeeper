@@ -10,10 +10,6 @@
             android:icon="@drawable/ic_university"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="@string/profile" />
-        <item
             android:id="@+id/nav_upload"
             android:icon="@drawable/ic_upload"
             android:title="@string/menu_upload" />
