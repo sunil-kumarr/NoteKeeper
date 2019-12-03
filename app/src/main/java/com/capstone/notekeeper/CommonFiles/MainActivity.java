@@ -108,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mActionBar.setTitle("Ask Questions");
                 fragment = new BlogQueryFragment();
                 break;
+            case R.id.nav_Share:
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT,"www.capstone.com");
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent,"Share Us"));
+                break;
+            case R.id.nav_feedback:
+                startActivity(new Intent(MainActivity.this,FeedbackActivity.class));
+                break;
+            case R.id.nav_faq:
+                startActivity(new Intent(MainActivity.this,FAQActivity.class));
+                break;
             default:
 //                    Toast.makeText(this, "dee", Toast.LENGTH_SHORT).show();
         }

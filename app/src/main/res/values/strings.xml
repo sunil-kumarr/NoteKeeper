@@ -9,6 +9,7 @@
     <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
     <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
+    <string name="feedback">Please leave feedback about our features in this application. And it would be very helpful if you could suggest us to improve our features.</string>
     <string name="hint_password">Password</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_link_to_register">Not a member? Sign up Now!</string>

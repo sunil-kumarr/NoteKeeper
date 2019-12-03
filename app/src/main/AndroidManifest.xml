@@ -21,24 +21,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:theme="@style/DetailsTheme"
             android:name=".StudyLibararyModule.StudyMaterialDetails"
-         >
+            android:theme="@style/DetailsTheme">
 
         </activity>
         <activity
             android:name=".StudyLibararyModule.NotesPDFViewActivity"
-          />
-        <activity
-            android:name=".StudyLibararyModule.NotesListActivity"
-          />
+            android:theme="@style/PdfViewTheme" />
+        <activity android:name=".StudyLibararyModule.NotesListActivity" />
         <activity
             android:name=".CommonFiles.MainActivity"
-            android:label="@string/title_activity_main"
-          />
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".authentication.LoginActivity"
-         
+
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,24 +45,26 @@
         <activity
             android:name=".authentication.SignupActivity"
             android:label="@string/title_activity_login"
-         
+
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".authentication.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-         
+
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".QuizModule.BrainPrepActivity" />
         <activity
             android:name=".AskQuestionModule.BlogQueryFragment"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".AskQuestionModule.SingleQuestionActivity" />
         <activity
-            android:name=".AskQuestionModule.SingleQuestionActivity"
-          />
-        <activity
-            android:parentActivityName=".CommonFiles.MainActivity"
             android:name=".CommonFiles.UserProfileActivity"
-          />
+            android:parentActivityName=".CommonFiles.MainActivity" />
+        <activity
+            android:name=".CommonFiles.FeedbackActivity"
+            android:parentActivityName=".CommonFiles.MainActivity" />
+        <activity android:name=".CommonFiles.FAQActivity"
+            android:parentActivityName=".CommonFiles.MainActivity"/>
     </application>
 
 </manifest>
