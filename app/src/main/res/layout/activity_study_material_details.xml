@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.StudyMaterialDetails">
+    tools:context=".StudyLibararyModule.StudyMaterialDetails">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/book_tool_bar"
@@ -49,6 +49,7 @@
         app:layout_constraintTop_toBottomOf="@id/book_tool_bar">
 
         <TextView
+            android:id="@+id/rating_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -91,7 +92,7 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,22 +116,68 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--            <View-->
-            <!--                android:id="@+id/line1"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="0.5dp"-->
-            <!--                android:layout_marginStart="@dimen/padding_10"-->
-            <!--                android:layout_marginTop="@dimen/padding_10"-->
-            <!--                android:layout_marginEnd="@dimen/padding_10"-->
-            <!--                android:layout_marginBottom="@dimen/padding_10"-->
-            <!--                android:background="@color/DimGray"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/book_description" />-->
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:background="@color/grey_100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/book_description" />
 
+            <TextView
+                android:id="@+id/rating_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_10"
+                android:text="Rating and Reviews"
+                android:textColor="@color/black"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:background="@color/grey_300"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rating_Text" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_rating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2" />
+
+            <TextView
+                android:id="@+id/no_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_10"
+                android:text="Be the first one to rate this study material"
+                android:textColor="@color/grey_400"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -150,8 +197,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="0dp"
                 android:id="@+id/book_download_Btn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
@@ -164,6 +211,7 @@
                 android:textSize="14sp" />
 
             <ImageView
+                android:id="@+id/book_share_link"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -187,13 +235,13 @@
                 android:src="@drawable/ic_rate" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/auther_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/auther_btn"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:src="@drawable/ic_author"
@@ -205,7 +253,7 @@
     </androidx.cardview.widget.CardView>
 
     <include
-        layout="@layout/fragment_rating_layout"
+        layout="@layout/study_rating_bottomlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

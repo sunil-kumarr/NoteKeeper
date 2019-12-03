@@ -45,27 +45,27 @@
                 android:text="@string/answer_owner_hint"
                 android:padding="2dp" />
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="2dp"
-        app:layout_constraintTop_toBottomOf="@id/answer_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_marginEnd="5dp"
-            android:text="500"/>
-        <ImageView
-            android:id="@+id/like_answer"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_like_gray" />
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="30dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_margin="2dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/answer_text"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:orientation="horizontal">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:textSize="14sp"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:text="500"/>-->
+<!--        <ImageView-->
+<!--            android:id="@+id/like_answer"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/ic_like_gray" />-->
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

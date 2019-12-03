@@ -23,7 +23,7 @@
     <string name="action_search">Search</string>
     <string name="facebook_application_id" translatable="false">2448040282118815</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb2448040282118815</string>
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Study Library</string>
     <string name="menu_upload">Upload Study Material</string>
     <string name="menu_lost_found">Lost and Found</string>
     <string name="menu_ask_questions">Ask Questions</string>
@@ -38,9 +38,11 @@
     <string name="sample_question">What are the algorithms required to solve all problems (using c++) in any competitive coding contest?</string>
     <string name="answer_owner_hint">Sunil Kumar at 14:50 on 21 oct,2019</string>
     <string name="long_description">Layout-Based behaviors are used to shift one view at some other place when you perform a certain task. For example, create a project in Android Studio with Basic Activity template. Now, run the application on your mobile. You will find a Floating Action Button on the screen. Just press the button and you will find a snackbar coming from the bottom of the screen. At the same time, you will notice that the Floating Action Button has moved upwards. After a few seconds the button will again come back to its original position.</string>
+    <string name="google_text">Connect your NoteKeeper account to your Google account for simplicity and ease.</string>
+    <string name="faq_help"><![CDATA[FAQ & Help]]></string>
 
 
-      <integer-array name="course_images">
+    <integer-array name="course_images">
 
       </integer-array>
     <string-array name="course_titles">

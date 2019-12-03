@@ -22,18 +22,18 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:theme="@style/DetailsTheme"
-            android:name=".Activity.StudyMaterialDetails"
+            android:name=".StudyLibararyModule.StudyMaterialDetails"
          >
 
         </activity>
         <activity
-            android:name=".Activity.NotesPDFViewActivity"
+            android:name=".StudyLibararyModule.NotesPDFViewActivity"
           />
         <activity
-            android:name=".Activity.NotesListActivity"
+            android:name=".StudyLibararyModule.NotesListActivity"
           />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".CommonFiles.MainActivity"
             android:label="@string/title_activity_main"
           />
         <activity
@@ -56,16 +56,16 @@
             android:label="@string/title_activity_reset_password"
          
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activity.BrainPrepActivity" />
+        <activity android:name=".QuizModule.BrainPrepActivity" />
         <activity
-            android:name=".Fragments.BlogQueryFragment"
+            android:name=".AskQuestionModule.BlogQueryFragment"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activity.SingleQuestionActivity"
+            android:name=".AskQuestionModule.SingleQuestionActivity"
           />
         <activity
-            android:parentActivityName=".Activity.MainActivity"
-            android:name=".Activity.UserProfileActivity"
+            android:parentActivityName=".CommonFiles.MainActivity"
+            android:name=".CommonFiles.UserProfileActivity"
           />
     </application>
 

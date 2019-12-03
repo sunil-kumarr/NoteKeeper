@@ -4,6 +4,7 @@
     tools:showIn="navigation_view">
 
     <group
+
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
@@ -31,6 +32,23 @@
         <item android:id="@+id/nav_brainer"
             android:title="@string/brain_teaser"
             android:icon="@drawable/ic_brain_black_24dp"/>
+    </group>
+    <group android:id="@+id/group_divider2" android:checkableBehavior="single">
+        <item android:id="@+id/nav_feedback"
+            android:title="Feedback"
+            android:icon="@drawable/ic_feedback"/>
+        <item android:id="@+id/nav_Share"
+            android:title="Share with Friends"
+            android:icon="@drawable/ic_share"/>
+        <item android:id="@+id/nav_faq"
+            android:title="@string/faq_help"
+            android:icon="@drawable/ic_faq"/>
+        <item android:id="@+id/nav_about_us"
+            android:title="About Developer"
+            android:icon="@drawable/ic_devloper"/>
+        <item android:id="@+id/nav_rate_us"
+            android:title="Rate our App"
+            android:icon="@drawable/ic_rate_us"/>
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
