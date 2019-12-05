@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.capstone.notekeeper.Activity.MainActivity;
+import com.capstone.notekeeper.CommonFiles.MainActivity;
 import com.capstone.notekeeper.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView btnSignup,btnReset;
     private Button btnLogin;
-    private ImageView btnGoogle,btnFacebook;
+    private Button btnGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnGoogle = findViewById(R.id.loginGoogle);
-        btnFacebook = findViewById(R.id.loginFacebook);
         btnSignup =  findViewById(R.id.btn_signup);
         btnLogin = findViewById(R.id.btn_login);
         btnReset =  findViewById(R.id.btn_reset_password);
@@ -83,19 +81,6 @@ public class LoginActivity extends AppCompatActivity {
             // Choose authentication providers
             List<AuthUI.IdpConfig> providers = Collections.singletonList(
                     new AuthUI.IdpConfig.GoogleBuilder().build());
-
-// Create and launch sign-in intent
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    23);
-        });
-        btnFacebook.setOnClickListener(view ->{
-
-            List<AuthUI.IdpConfig> providers = Collections.singletonList(
-                    new AuthUI.IdpConfig.FacebookBuilder().build());
 
 // Create and launch sign-in intent
             startActivityForResult(

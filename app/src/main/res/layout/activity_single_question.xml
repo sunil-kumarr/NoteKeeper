@@ -1,62 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/white_1000">
 
-    <!-- Actionbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_single_question"
+    <TextView
+        android:id="@+id/question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"/>
+        android:padding="16dp"
+        android:text="What are most common mistakes in programming?"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Question resides at the top -->
-    <TextView
-        android:id="@+id/text_single_question_user_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="your_name@email.com asks..."/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/question_owner_image"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_person_black_24dp"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="1dp"
+        app:civ_circle_background_color="@color/grey_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/question_text" />
 
-    <TextView
-        android:id="@+id/text_single_question_string"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/container_data"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="What is your question?"/>
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/question_owner_image"
+        app:layout_constraintTop_toBottomOf="@id/question_text">
 
-    <TextView
-        android:id="@+id/text_single_question_time_stamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Submitted: 1 Jan 2015"/>
+        <TextView
+            android:id="@+id/question_owner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="Sunil Kumar"
+            android:textColor="@color/grey_800"
+            android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/text_single_question_num_answers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="5 answers"/>
-
-    <ImageView
-        android:id="@+id/image_single_question_user_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:src="@android:drawable/star_big_on"/>
+        <TextView
+            android:id="@+id/text_question_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="Question Added at :"
+            android:textColor="@color/grey_800"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <View
+        android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_height="0.5dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/grey_800"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_data" />
 
-    <!-- Answers reside below the Question -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_answers"
+        android:id="@+id/answer_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/grey_200"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_answer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:src="@drawable/ic_feather_write"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/go_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:background="@color/grey_800"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/no_answer_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_write_answer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Be the first one to answer this question."
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

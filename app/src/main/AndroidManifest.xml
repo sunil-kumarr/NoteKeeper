@@ -4,20 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.capstone.notekeeper">
 
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <dist:module dist:instant="true" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_atom"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".BuyAndSellModule.ProductDetailsActivity"></activity>
         <activity
-            android:name=".Activity.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".StudyLibararyModule.StudyMaterialDetails"
+            android:theme="@style/DetailsTheme"></activity>
+        <activity
+            android:name=".StudyLibararyModule.NotesPDFViewActivity"
+            android:theme="@style/PdfViewTheme" />
+        <activity android:name=".StudyLibararyModule.NotesListActivity" />
+        <activity
+            android:name=".CommonFiles.MainActivity"
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".authentication.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,25 +46,25 @@
         <activity
             android:name=".authentication.SignupActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".authentication.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activity.BrainPrepActivity" />
-        <activity android:name=".Fragments.BlogQueryFragment" />
-        <activity android:name=".Activity.SingleQuestionActivity"  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".QuizModule.BrainPrepActivity" />
+        <activity
+            android:name=".AskQuestionModule.BlogQueryFragment"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".AskQuestionModule.SingleQuestionActivity" />
+        <activity
+            android:name=".CommonFiles.UserProfileActivity"
+            android:parentActivityName=".CommonFiles.MainActivity" />
+        <activity
+            android:name=".CommonFiles.FeedbackActivity"
+            android:parentActivityName=".CommonFiles.MainActivity" />
+        <activity
+            android:name=".CommonFiles.FAQActivity"
+            android:parentActivityName=".CommonFiles.MainActivity" />
     </application>
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <dist:module dist:instant="true" />
 
 </manifest>

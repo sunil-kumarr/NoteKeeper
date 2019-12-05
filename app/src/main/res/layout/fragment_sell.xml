@@ -1,152 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp"
+        android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_media_play" />
-
-        <TextView
-            android:id="@+id/Product_tag"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_container_1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/imageButton5"
-            android:text="Product Name"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp"
+            android:textColorHint="#AFA1A1"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#F44336"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/edit_text_file_name"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Item name here.."
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textColorHint="@android:color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_container_2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Product_tag"
-            android:layout_marginStart="65dp"
-            android:hint="Enter Product name"
-            android:maxLength="55"
-            android:maxLines="1"
-            android:singleLine="true" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_text_file_name"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
-
-        <TextView
-            android:id="@+id/Image_tag"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_text_file_name"
-            android:layout_marginLeft="65dp"
             android:layout_marginTop="5dp"
-            android:text="select an image "
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textColorHint="#AFA1A1"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#F44336"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_container_1">
 
-        <Button
-            android:id="@+id/button_choose_image"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item description here.."
+                android:inputType="text"
+                android:minHeight="100dp"
+                android:textColor="#000000"
+                android:textColorHint="@android:color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_container_3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Image_tag"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="#AFA1A1"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#F44336"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_container_2">
 
-
-            android:text="choose Image" />
-
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="350dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/button_choose_image"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <ImageButton
-            android:id="@+id/rupee_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image_view"
-            app:srcCompat="@drawable/ic_rupee" />
-
-        <TextView
-            android:id="@+id/Price_tag"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item price here"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textColorHint="@android:color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/image_view"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_toEndOf="@id/rupee_button"
-            android:text="product price "
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/edit_text_file_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Price_tag"
-            android:layout_marginStart="60dp"
-            android:hint="Enter Price"
-            android:inputType="number"
-            android:maxLength="4"
-            android:maxLines="1" />
-        <TextView
-            android:id="@+id/Description_tag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_text_file_price"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Description (optional) "
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/Description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Description_tag"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Short Description"
-            android:lines="2"
-            android:maxLength="400" />
-
+            android:id="@+id/file_container"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/edt_container_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/file_choos_box"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/choose_file_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="choose"/>
+            <TextView
+                android:id="@+id/file_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="productModel item images.."
+                android:gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/grey_600"/>
+        </LinearLayout>
         <ProgressBar
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:id="@+id/upload_progress"
+            app:layout_constraintTop_toBottomOf="@id/file_container"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/padding_10"
+            android:layout_margin="@dimen/padding_10"
+            app:layout_constraintBottom_toTopOf="@id/post_button"
+            app:layout_constraintTop_toBottomOf="@id/file_container"/>
+        <Button
+            android:id="@+id/post_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/Description"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-4dp" />
-
-        <Button
-            android:id="@+id/button_upload"
-            android:layout_below="@+id/progress_bar"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Upload" />
-
-
-    </RelativeLayout>
-
+            android:textColor="@color/white_1000"
+            android:background="@color/colorAccent"
+            android:text="Post Product for sale"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

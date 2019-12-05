@@ -3,22 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/tools">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_bloquery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="26sp"
-            android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:background="@color/grey_200"
+            android:divider="@color/grey_800"
+            android:dividerHeight="1dp"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         app:fabSize="normal"
-        android:src="@drawable/ic_add_black_24dp"
-        android:id="@+id/add_question"
-        />
+        android:src="@drawable/ic_question"
+        android:id="@+id/add_question" />
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="@color/background"
+        shimmer:duration="800">
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/placeholder_question" />
+            <include layout="@layout/placeholder_question" />
+            <include layout="@layout/placeholder_question" />
+            <include layout="@layout/placeholder_question" />
+            <include layout="@layout/placeholder_question" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
     </FrameLayout>
