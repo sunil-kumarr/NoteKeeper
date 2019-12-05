@@ -10,9 +10,9 @@
     tools:context=".authentication.LoginActivity">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_atom"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_graduate"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,14 +86,31 @@
                     android:textStyle="normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:id="@+id/container_4"
+                android:layout_width="match_parent"
+                android:visibility="visible"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="#F44336"
-                android:text="@string/btn_login"
-                android:textColor="@color/white" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/submit_love"
+                    android:text="Login"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_signup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/submit_love"
+                    android:text="SignUp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <TextView
                 android:gravity="center"
@@ -106,17 +123,6 @@
                 android:textAllCaps="false"
                 android:textColor="#F44336" />
 
-            <TextView
-                android:gravity="center"
-                android:id="@+id/btn_signup"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@null"
-                android:text="@string/btn_link_to_register"
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:textSize="15dp" />
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"

@@ -8,11 +8,24 @@
     android:fitsSystemWindows="true"
     tools:context=".authentication.LoginActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mobile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/blue_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Please verify mobile number"
+        app:titleTextColor="@color/white" />
+
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/ic_graduate"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:maxHeight="300dp"
+        android:padding="50dp"
+        android:src="@drawable/ic_phone_message"
+        app:layout_constraintBottom_toTopOf="@id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,8 +49,10 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
 
+
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/container_1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#AFA1A1"
@@ -48,20 +63,20 @@
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Small">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/country_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:drawableStart="@drawable/ic_person_black_24dp"
-                    android:drawablePadding="5dp"
-                    android:hint="@string/hint_email"
+                    android:enabled="false"
                     android:inputType="textEmailAddress"
+                    android:text="India(+91)"
+                    android:textAlignment="center"
                     android:textColor="#000000"
                     android:textColorHint="@android:color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/container_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#AFA1A1"
@@ -72,83 +87,103 @@
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Small">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/mobile_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:drawableStart="@drawable/ic_vpn_key_black_24dp"
-                    android:drawablePadding="5dp"
-                    android:hint="@string/hint_password"
-                    android:inputType="textPassword"
+                    android:gravity="center"
+                    android:hint="Your Phone Number"
+                    android:inputType="phone"
+                    android:textAlignment="center"
                     android:textColor="#000000"
                     android:textStyle="normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/container_3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#AFA1A1"
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="#F44336"
+                android:visibility="gone"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
+                android:layout_margin="20dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Small">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/confirm_password"
+                    android:id="@+id/mobile_verification_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:drawableStart="@drawable/ic_vpn_key_black_24dp"
-                    android:drawablePadding="5dp"
-                    android:hint="Confirm Password"
-                    android:inputType="textPassword"
+                    android:gravity="center"
+                    android:hint="Verification Code"
+                    android:inputType="number"
+                    android:textAlignment="center"
                     android:textColor="#000000"
                     android:textStyle="normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
+            <TextView
+                android:id="@+id/mobile_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="I have read and accept the Privacy Policy"
-                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/mobile_verify_desc"
+                android:textAllCaps="false"
+                android:textColor="@color/grey_800"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/btn_change_mobile_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@null"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="Change Mobile Number."
+                android:textAllCaps="false"
+                android:textColor="@color/blue_500"
                 android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_send_verification_code"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:background="@drawable/submit_love"
+                android:text="Send code"
+                android:textColor="@color/white" />
 
             <LinearLayout
                 android:id="@+id/container_4"
                 android:layout_width="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/sign_up_button"
+                    android:id="@+id/btn_verify_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/submit_love"
-                    android:text="Register"
+                    android:text="Verify"
                     android:textColor="@color/white" />
 
                 <Button
-                    android:id="@+id/btn_login"
+                    android:id="@+id/btn_resend_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/submit_love"
-                    android:text="LogIn"
+                    android:text="Resend"
                     android:textColor="@color/white" />
             </LinearLayout>
-
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

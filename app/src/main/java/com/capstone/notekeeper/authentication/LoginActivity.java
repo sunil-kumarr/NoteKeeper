@@ -1,6 +1,7 @@
 package com.capstone.notekeeper.authentication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,129 +30,135 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final int GOOGLE_SIGNIN_CODE = 23;
+
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private TextView btnSignup,btnReset;
-    private Button btnLogin;
+    private TextView  btnReset;
+    private Button btnLogin,btnSignup;
     private Button btnGoogle;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-
-        // set the view now
         setContentView(R.layout.activity_login);
+        auth = FirebaseAuth.getInstance();
+        mSharedPreferences= getSharedPreferences("login_data",MODE_PRIVATE);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
         btnGoogle = findViewById(R.id.loginGoogle);
-        btnSignup =  findViewById(R.id.btn_signup);
+        btnSignup = findViewById(R.id.btn_signup);
         btnLogin = findViewById(R.id.btn_login);
-        btnReset =  findViewById(R.id.btn_reset_password);
+        btnReset = findViewById(R.id.btn_reset_password);
         auth = FirebaseAuth.getInstance();
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-            }
-        });
+        goToSignUpActivity();
+        goToResetPasswordActivity();
+        signInWithGoogleBtn();
+        signInWithEmailAndPAssword();
+    }
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkVerificationStatus();
+    }
 
+    private void checkVerificationStatus() {
+        if (auth.getCurrentUser() != null) {
+            boolean verified = mSharedPreferences.getBoolean("phone",false);
+            boolean logged = mSharedPreferences.getBoolean("login",false);
+//            Toast.makeText(this, ""+logged+" "+verified, Toast.LENGTH_SHORT).show();
+            if(verified) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+            else if(logged){
+                startActivity(new Intent(LoginActivity.this, PhoneVerificationActivity.class));
+            }
+            else
+                auth.signOut();
+        }
+    }
+
+    private void goToSignUpActivity() {
+        btnSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
+    }
+
+    private void goToResetPasswordActivity() {
+        btnReset.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class)));
+    }
+
+    private void signInWithGoogleBtn() {
         btnGoogle.setOnClickListener(view -> {
-            // Choose authentication providers
             List<AuthUI.IdpConfig> providers = Collections.singletonList(
                     new AuthUI.IdpConfig.GoogleBuilder().build());
-
-// Create and launch sign-in intent
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
                             .build(),
-                    23);
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = inputEmail.getText().toString();
-                final String password = inputPassword.getText().toString();
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                progressBar.setVisibility(View.GONE);
-                                if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                        });
-            }
+                    GOOGLE_SIGNIN_CODE);
         });
     }
+
+    private void signInWithEmailAndPAssword() {
+        btnLogin.setOnClickListener(v -> {
+            String email = inputEmail.getText().toString();
+            String password = inputPassword.getText().toString();
+
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(LoginActivity.this, task -> {
+                        progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            if (password.length() < 6) {
+                                inputPassword.setError(getString(R.string.minimum_password));
+                            } else {
+                                Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            mSharedPreferences.edit().putBoolean("login",true).apply();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 23) {
+        if (requestCode == GOOGLE_SIGNIN_CODE) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
-
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                mSharedPreferences.edit().putBoolean("login",true).apply();
+                Intent intent = new Intent(LoginActivity.this,PhoneVerificationActivity.class);
                 startActivity(intent);
-                finish();
-                // ...
             } else {
-                Toast.makeText(this, "Login Failed: "+response.getError(), Toast.LENGTH_SHORT).show();
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
+                if (response == null) {
+                    Toast.makeText(this, "Cancelled by user!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Login Failed: " + response.getError(), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

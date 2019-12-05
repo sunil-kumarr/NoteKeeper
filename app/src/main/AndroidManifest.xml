@@ -23,10 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".BuyAndSellModule.ProductDetailsActivity"></activity>
+        <activity android:name=".authentication.PhoneVerificationActivity" android:theme="@style/DetailsTheme"></activity>
+        <activity android:name=".authentication.VerifyEmailActivity" />
+        <activity android:name=".BuyAndSellModule.ProductDetailsActivity" />
         <activity
             android:name=".StudyLibararyModule.StudyMaterialDetails"
-            android:theme="@style/DetailsTheme"></activity>
+            android:theme="@style/DetailsTheme" />
         <activity
             android:name=".StudyLibararyModule.NotesPDFViewActivity"
             android:theme="@style/PdfViewTheme" />
@@ -36,6 +38,7 @@
             android:label="@string/title_activity_main" />
         <activity
             android:name=".authentication.LoginActivity"
+            android:theme="@style/DetailsTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,11 +48,13 @@
         </activity>
         <activity
             android:name=".authentication.SignupActivity"
+            android:theme="@style/DetailsTheme"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".authentication.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
+            android:theme="@style/DetailsTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".QuizModule.BrainPrepActivity" />
         <activity

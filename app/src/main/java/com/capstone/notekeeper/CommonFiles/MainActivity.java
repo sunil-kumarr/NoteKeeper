@@ -1,7 +1,9 @@
 package com.capstone.notekeeper.CommonFiles;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -182,7 +185,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void signout() {
-        auth.signOut();
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure?")
+                .setTitle("Logout!")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface pDialogInterface, int pI) {
+                        getSharedPreferences("login_data", MODE_PRIVATE)
+                                .edit()
+                                .putBoolean("login", false)
+                                .putBoolean("phone", false)
+                                .apply();
+                        auth.signOut();
+                    }
+                }).create().show();
+
     }
 
     @Override

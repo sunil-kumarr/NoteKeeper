@@ -42,6 +42,7 @@
     <string name="google_text">Connect your NoteKeeper account to your Google account for simplicity and ease.</string>
     <string name="faq_help"><![CDATA[FAQ & Help]]></string>
     <string name="sample_desc">If this describes you, consider joining us as an intern in the winter of 2020! Amazon interns have the opportunity to work alongside the industry’s brightest engineers who innovate everyday on behalf of our customers. Our interns write real software and partner with a select group of experienced software development engineers who help interns on projects that matter to our customers.</string>
+    <string name="mobile_verify_desc">We will send you a one time password. Carrier rate may apply.</string>
 
 
     <integer-array name="course_images">
