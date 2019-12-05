@@ -252,7 +252,7 @@ public class UploadNotesFragment extends Fragment  {
             intent.setType(mimeTypesStr.substring(0, mimeTypesStr.length() - 1));
         }
         startActivityForResult(
-                Intent.createChooser(intent, "Select a File to Product"),
+                Intent.createChooser(intent, "Select a File to ProductModel"),
                 FILE_SELECT_CODE);
     }
 

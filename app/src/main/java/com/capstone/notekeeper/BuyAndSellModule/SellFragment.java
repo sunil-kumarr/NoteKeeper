@@ -3,6 +3,9 @@ package com.capstone.notekeeper.BuyAndSellModule;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,6 +25,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.capstone.notekeeper.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +40,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -53,11 +60,14 @@ public class SellFragment extends Fragment {
     private TextView mDescription;
     private ProgressBar mProgressBar;
     private Uri mImageUri;
-    private String fileLink,productName,productDesc,productPrice;
+    private String fileLink, productName, productDesc, productPrice;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     private FirebaseUser mCurrentUser;
     private StorageTask mUploadTask;
+
+    private Geocoder mGeocoder;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -70,6 +80,15 @@ public class SellFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sell, container, false);
         getActivity().setTitle("Sell Products");
+
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
         mButtonChooseImage = v.findViewById(R.id.choose_file_btn);
         mButtonUpload = v.findViewById(R.id.post_button);
         mEditTextFileName = v.findViewById(R.id.edt_product_name);
@@ -96,44 +115,65 @@ public class SellFragment extends Fragment {
                     productName = mEditTextFileName.getText().toString();
                     productDesc = mDescription.getText().toString();
                     productPrice = mEditTextFilePrice.getText().toString();
-                    if(TextUtils.isEmpty(productName)|| TextUtils.isEmpty(productDesc)||TextUtils.isEmpty(productPrice)){
+                    if (TextUtils.isEmpty(productName) || TextUtils.isEmpty(productDesc) || TextUtils.isEmpty(productPrice)) {
                         Toast.makeText(mContext, "Invalid Inputs!!", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         uploadImage();
                     }
                 }
             }
         });
-        return v;
     }
 
-    private void addDataToFirebase(String fileLink) {
-            String productId =  mDatabaseRef.push().getKey();
-            if(mCurrentUser!=null && fileLink!=null){
-                String userId = mCurrentUser.getUid();
-                String userName = mCurrentUser.getDisplayName();
-                String userEmail = mCurrentUser.getEmail();
-                String phoneNumber = mCurrentUser.getPhoneNumber();
-                String userImageUrl = Objects.requireNonNull(mCurrentUser.getPhotoUrl()).toString();
-                Product uploadProduct = new Product(userEmail,userName,phoneNumber,userImageUrl,userId
-                 ,productName,productDesc,productPrice,fileLink,productId,System.currentTimeMillis());
-                mDatabaseRef.child(productId).setValue(uploadProduct)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(mContext, "Product posted online!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(mContext, "Failed !", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            else{
-                Toast.makeText(mContext, "Error while posting", Toast.LENGTH_SHORT).show();
-            }
+    private void addDataToFirebase(String location,String fileLink) {
+        String productId = mDatabaseRef.push().getKey();
+        if (mCurrentUser != null && fileLink != null) {
+            String userId = mCurrentUser.getUid();
+            String userName = mCurrentUser.getDisplayName();
+            String userEmail = mCurrentUser.getEmail();
+            String phoneNumber = mCurrentUser.getPhoneNumber();
+            String userImageUrl = Objects.requireNonNull(mCurrentUser.getPhotoUrl()).toString();
+            ProductModel uploadProductModel = new ProductModel(userEmail, userName, phoneNumber, userImageUrl, userId
+                    , productName, productDesc, productPrice, fileLink,location, productId, System.currentTimeMillis());
+            assert productId != null;
+            mDatabaseRef.child(productId).setValue(uploadProductModel)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(mContext, "ProductModel posted online!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(mContext, "Failed !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(mContext, "Error while posting", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private void getLastLocationOfUser(String pFileLink) {
+        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location pLocation) {
+                if (pLocation != null) {
+                    mGeocoder = new Geocoder(mContext);
+                    try {
+                        List<Address> addressList = mGeocoder.getFromLocation(pLocation.getLatitude(), pLocation.getLongitude(), 1);
+                        Address address = addressList.get(0);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(address.getSubLocality()).append(address.getPostalCode()).append(address.getLocality());
+                        String loc = stringBuilder.toString();
+                        addDataToFirebase(loc,pFileLink);
+                    } catch (IOException pE) {
+                        pE.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onStart() {
@@ -187,8 +227,8 @@ public class SellFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Toast.makeText(mContext, "Posting...", Toast.LENGTH_SHORT).show();
-                                    fileLink =  uri.toString();
-                                    addDataToFirebase(fileLink);
+                                    fileLink = uri.toString();
+                                    getLastLocationOfUser(fileLink);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -196,7 +236,7 @@ public class SellFragment extends Fragment {
                                     Toast.makeText(mContext, "Failed to post!", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                         }
+                        }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override

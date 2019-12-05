@@ -161,7 +161,7 @@ public class BlogQueryFragment extends Fragment implements ChildEventListener,
                 mQuestionsReference.child(questionID).setValue(question);
                 Toast.makeText(mContext, "Question added!", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(mContext, "Invalid User", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Invalid user", Toast.LENGTH_SHORT).show();
             }
         }
     }

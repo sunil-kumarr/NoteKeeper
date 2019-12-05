@@ -121,4 +121,5 @@
     <color name="grey_100">#EBE7E7</color>
     <color name="toolbar_color">#F3F3F3</color>
     <color name="grey_400">#ACAAAA</color>
+    <color name="purple">#673AB7</color>
 </resources>

@@ -1,6 +1,8 @@
 package com.capstone.notekeeper.CommonFiles;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,9 +30,13 @@ import com.capstone.notekeeper.BuyAndSellModule.SellFragment;
 import com.capstone.notekeeper.StudyLibararyModule.UploadNotesFragment;
 import com.capstone.notekeeper.R;
 import com.capstone.notekeeper.authentication.LoginActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
         , AddQuestionBottomSheet.SendQuestionToActivity {
@@ -39,12 +46,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private ActionBar mActionBar;
+    private int locationRequestCode = 1000;
+    private double wayLatitude = 0.0, wayLongitude = 0.0;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         authListener = firebaseAuth -> {
             FirebaseUser user1 = firebaseAuth.getCurrentUser();
@@ -53,6 +65,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 finish();
             }
         };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    locationRequestCode);
+
+        } else {
+            getLastLocationOfUser();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,6 +96,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
             });
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1000: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLastLocationOfUser();
+                } else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+
+    private void getLastLocationOfUser() {
+        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (location != null) {
+                wayLatitude = location.getLatitude();
+                wayLongitude = location.getLongitude();
+
+            }
+        });
     }
 
     private boolean displaySelectedScreen(int id) {
@@ -109,17 +156,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new BlogQueryFragment();
                 break;
             case R.id.nav_Share:
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT,"www.capstone.com");
+                intent.putExtra(Intent.EXTRA_TEXT, "www.capstone.com");
                 intent.setType("text/plain");
-                startActivity(Intent.createChooser(intent,"Share Us"));
+                startActivity(Intent.createChooser(intent, "Share Us"));
                 break;
             case R.id.nav_feedback:
-                startActivity(new Intent(MainActivity.this,FeedbackActivity.class));
+                startActivity(new Intent(MainActivity.this, FeedbackActivity.class));
                 break;
             case R.id.nav_faq:
-                startActivity(new Intent(MainActivity.this,FAQActivity.class));
+                startActivity(new Intent(MainActivity.this, FAQActivity.class));
                 break;
             default:
 //                    Toast.makeText(this, "dee", Toast.LENGTH_SHORT).show();
@@ -196,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

@@ -41,11 +41,12 @@
     <string name="long_description">Layout-Based behaviors are used to shift one view at some other place when you perform a certain task. For example, create a project in Android Studio with Basic Activity template. Now, run the application on your mobile. You will find a Floating Action Button on the screen. Just press the button and you will find a snackbar coming from the bottom of the screen. At the same time, you will notice that the Floating Action Button has moved upwards. After a few seconds the button will again come back to its original position.</string>
     <string name="google_text">Connect your NoteKeeper account to your Google account for simplicity and ease.</string>
     <string name="faq_help"><![CDATA[FAQ & Help]]></string>
+    <string name="sample_desc">If this describes you, consider joining us as an intern in the winter of 2020! Amazon interns have the opportunity to work alongside the industry’s brightest engineers who innovate everyday on behalf of our customers. Our interns write real software and partner with a select group of experienced software development engineers who help interns on projects that matter to our customers.</string>
 
 
     <integer-array name="course_images">
 
-      </integer-array>
+    </integer-array>
     <string-array name="course_titles">
         <item>Computer Science Engineering</item>
         <item>Information Technology Engineering</item>

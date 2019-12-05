@@ -35,7 +35,7 @@ public class BuyProductListFragment extends Fragment {
     private FirebaseStorage mStorage;
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
-    private List<Product> mProducts;
+    private List<ProductModel> mProductModels;
     private Context mContext;
     private ShimmerFrameLayout shimmerFrameLayout;
 
@@ -53,8 +53,8 @@ public class BuyProductListFragment extends Fragment {
         getActivity().setTitle("Buy Products");
 
         shimmerFrameLayout = v.findViewById(R.id.shimmer_view_container);
-        mProducts = new ArrayList<>();
-        mAdapter = new ProductDisplayAdapter(mContext, mProducts);
+        mProductModels = new ArrayList<>();
+        mAdapter = new ProductDisplayAdapter(mContext, mProductModels);
         mRecyclerView = v.findViewById(R.id.product_list_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -64,10 +64,10 @@ public class BuyProductListFragment extends Fragment {
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mProducts.clear();
+                mProductModels.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Product product = postSnapshot.getValue(Product.class);
-                    mProducts.add(product);
+                    ProductModel productModel = postSnapshot.getValue(ProductModel.class);
+                    mProductModels.add(productModel);
                 }
                 shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);

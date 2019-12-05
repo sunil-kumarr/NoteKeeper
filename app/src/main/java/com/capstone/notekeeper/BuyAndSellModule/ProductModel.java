@@ -6,27 +6,44 @@ import com.google.firebase.database.Exclude;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Product {
+public class ProductModel {
     private String userEmail,userName,userPhone,userImageUrl,userId;
-    private String productName,productDesc,productPrice,productImageUrl;
-    private String productUploadId;
+    private String productName,productDesc,productPrice,productImageUrl,productLocation;
+    private String productID;
     private long postTimeStamp;
 
-    public Product() {
+    public ProductModel() {
     }
 
-    public Product(String userEmail, String userName, String userPhone, String userImageUrl, String userId, String productName, String productDesc, String productPrice, String productImageUrl, String productUploadId, long postTimeStamp) {
-        this.userEmail = userEmail;
-        this.userName = userName;
-        this.userPhone = userPhone;
-        this.userImageUrl = userImageUrl;
-        this.userId = userId;
-        this.productName = productName;
-        this.productDesc = productDesc;
-        this.productPrice = productPrice;
-        this.productImageUrl = productImageUrl;
-        this.productUploadId = productUploadId;
-        this.postTimeStamp = postTimeStamp;
+    public ProductModel(String pUserEmail, String pUserName, String pUserPhone, String pUserImageUrl, String pUserId, String pProductName, String pProductDesc, String pProductPrice, String pProductImageUrl, String pProductLocation, String pProductID, long pPostTimeStamp) {
+        userEmail = pUserEmail;
+        userName = pUserName;
+        userPhone = pUserPhone;
+        userImageUrl = pUserImageUrl;
+        userId = pUserId;
+        productName = pProductName;
+        productDesc = pProductDesc;
+        productPrice = pProductPrice;
+        productImageUrl = pProductImageUrl;
+        productLocation = pProductLocation;
+        productID = pProductID;
+        postTimeStamp = pPostTimeStamp;
+    }
+
+    public String getProductLocation() {
+        return productLocation;
+    }
+
+    public void setProductLocation(String pProductLocation) {
+        productLocation = pProductLocation;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String pProductID) {
+        productID = pProductID;
     }
 
     public String getUserEmail() {
@@ -99,14 +116,6 @@ public class Product {
 
     public void setProductImageUrl(String productImageUrl) {
         this.productImageUrl = productImageUrl;
-    }
-
-    public String getProductUploadId() {
-        return productUploadId;
-    }
-
-    public void setProductUploadId(String productUploadId) {
-        this.productUploadId = productUploadId;
     }
 
     public long getPostTimeStamp() {
