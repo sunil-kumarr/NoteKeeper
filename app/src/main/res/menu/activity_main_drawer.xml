@@ -27,6 +27,7 @@
             android:icon="@drawable/ic_buy_sell"
             android:title="@string/buy_products" />
         <item
+            android:id="@+id/nav_lost_found"
             android:icon="@drawable/ic_lost_items"
             android:title="@string/menu_lost_found" />
         <item android:id="@+id/nav_brainer"

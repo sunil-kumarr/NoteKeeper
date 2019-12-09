@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".authentication.PhoneVerificationActivity" android:theme="@style/DetailsTheme"></activity>
+        <activity
+            android:name=".authentication.PhoneVerificationActivity"
+            android:theme="@style/DetailsTheme"></activity>
         <activity android:name=".authentication.VerifyEmailActivity" />
         <activity android:name=".BuyAndSellModule.ProductDetailsActivity" />
         <activity
@@ -48,15 +50,14 @@
         </activity>
         <activity
             android:name=".authentication.SignupActivity"
-            android:theme="@style/DetailsTheme"
             android:label="@string/title_activity_login"
+            android:theme="@style/DetailsTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".authentication.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/DetailsTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".QuizModule.BrainPrepActivity" />
         <activity
             android:name=".AskQuestionModule.BlogQueryFragment"
             android:windowSoftInputMode="adjustPan" />
@@ -70,6 +71,20 @@
         <activity
             android:name=".CommonFiles.FAQActivity"
             android:parentActivityName=".CommonFiles.MainActivity" />
+
+        <activity android:name=".QuizModule.QuizLevelOneActivity" />
+        <activity android:name=".QuizModule.QuizSec1Activity" />
+        <activity android:name=".QuizModule.QuizSec2Activity" />
+        <activity android:name=".QuizModule.WrongQuestion" />
+        <activity android:name=".QuizModule.ResultActivity" />
+        <activity android:name=".QuizModule.QuizLevelTwoActivity" />
+        <activity android:name=".QuizModule.QuizLevelThreeActivity" />
+        <activity android:name=".QuizModule.QuizSec3Activity" />
+        <activity android:name=".QuizModule.Info" />
+        <activity android:name=".QuizModule.QuizFinalActivity" />
+        <activity android:name=".QuizModule.QuizMainActivity"></activity>
+        <activity android:name=".LostFoundModule.ImagesActivity"></activity>
+        <activity android:name=".LostFoundModule.LostFoundMain"></activity>
     </application>
 
 </manifest>

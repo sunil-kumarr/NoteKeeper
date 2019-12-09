@@ -3,7 +3,6 @@ package com.capstone.notekeeper.CommonFiles;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,19 +26,18 @@ import androidx.fragment.app.FragmentTransaction;
 import com.capstone.notekeeper.AskQuestionModule.AddQuestionBottomSheet;
 import com.capstone.notekeeper.AskQuestionModule.BlogQueryFragment;
 import com.capstone.notekeeper.BuyAndSellModule.BuyProductListFragment;
-import com.capstone.notekeeper.StudyLibararyModule.HomeFragment;
-import com.capstone.notekeeper.QuizModule.PlacementQuizFragment;
 import com.capstone.notekeeper.BuyAndSellModule.SellFragment;
-import com.capstone.notekeeper.StudyLibararyModule.UploadNotesFragment;
+import com.capstone.notekeeper.LostFoundModule.LostFoundMain;
+import com.capstone.notekeeper.QuizModule.QuizMainActivity;
 import com.capstone.notekeeper.R;
+import com.capstone.notekeeper.StudyLibararyModule.HomeFragment;
+import com.capstone.notekeeper.StudyLibararyModule.UploadNotesFragment;
 import com.capstone.notekeeper.authentication.LoginActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
         , AddQuestionBottomSheet.SendQuestionToActivity {
@@ -146,9 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mActionBar.setTitle("Post products");
                 fragment = new SellFragment();
                 break;
+            case R.id.nav_lost_found:
+                startActivity(new Intent(MainActivity.this, LostFoundMain.class));
+                break;
             case R.id.nav_brainer:
                 mActionBar.setTitle("Practice Quiz");
-                fragment = new PlacementQuizFragment();
+                startActivity(new Intent(MainActivity.this, QuizMainActivity.class));
                 break;
             case R.id.nav_upload:
                 mActionBar.setTitle("Upload Study Materials");
