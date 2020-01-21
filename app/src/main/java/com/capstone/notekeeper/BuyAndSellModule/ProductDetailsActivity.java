@@ -81,7 +81,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                     CALL_REQUEST);
         } else {
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "8116227044"));
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + pUserPhone));
             startActivity(intent);
         }
 

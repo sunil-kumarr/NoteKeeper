@@ -70,6 +70,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
             if(!mLayoutArrayList.contains(holder.courseTab2)) {
                 mLayoutArrayList.add(holder.courseTab2);
             }
+            if(selectedItem==null && position==0){
+                holder.courseTab2.setBackgroundResource(R.color.green_300);
+                selectedItem = currentCourse.getCourseName();
+            }
             holder.courseTab2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View pView) {
@@ -80,7 +84,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
                     selectedItem = currentCourse.getCourseName();
                 }
             });
-
         }
 
     }

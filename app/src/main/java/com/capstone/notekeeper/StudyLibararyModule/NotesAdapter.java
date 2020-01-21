@@ -56,8 +56,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesHolder>
             holder.NotesAuthor.setText(current.getAuthorName());
         }
         holder.NotesTime.setText(Utils.getFormatedDate(current.getTimsetamp()));
-        float rated = current.getRating()/current.getTotalRatings();
-        holder.NoteRating.setText(String.valueOf(rated));
+        float rated = 0;
+        if(current.getTotalRatings()!=0) {
+             rated = current.getRating() / rated;
+        }
+        holder.NoteRating.setText(String.format("%.2f",rated));
         bounce = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
         holder.mDownloadFile.setOnClickListener(v -> {
             holder.mDownloadFile.startAnimation(bounce);

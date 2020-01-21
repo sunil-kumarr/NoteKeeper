@@ -282,8 +282,11 @@ public class StudyMaterialDetails extends AppCompatActivity {
             }
             if (mNoteBookModel.getAuthorName() != null)
                 mNotesAuthor.setText(mNoteBookModel.getAuthorName());
-            float rated = mNoteBookModel.getRating()/mNoteBookModel.getTotalRatings();
-            mRatingMain.setText(String.valueOf(rated));
+            float rated = 0;
+            if(mNoteBookModel.getTotalRatings()!=0) {
+                rated = mNoteBookModel.getRating() / mNoteBookModel.getTotalRatings();
+            }
+            mRatingMain.setText(String.format("%.2f",rated));
             mNotesTime.setText(String.format("Uploaded On: %s", Utils.getFormatedDate(mNoteBookModel.getTimsetamp())));
         } else {
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
